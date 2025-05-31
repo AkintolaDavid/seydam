@@ -10,6 +10,15 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Signup from "./pages/Signup";
 import ReportForm from "./pages/ReportForm";
 import GenerationPage from "./pages/GenerationPage";
+import LandingPage from "./pages/LandingPage";
+import { DarkModeProvider } from "./components/Landing/Darkmode";
+import About from "./pages/About";
+import ContactUs from "./pages/ContactUsPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import ReturnsAndRefunds from "./pages/ReturnsAndRefunds";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import ForgotPassword from "./pages/Forgotpassword";
+import ScrollToTop from "./components/scrolltotop/ScrollToTop";
 
 function App() {
   // Initialize sidebar state based on screen size
@@ -30,64 +39,80 @@ function App() {
   }, []);
 
   return (
-    <ChakraProvider>
-      <Router>
-        <div className="h-screen flex overflow-hidden ">
-          {/* Sidebar */}
-          {token && (
-            <Sidebar
-              isOpen={isSidebarOpen}
-              setIsOpen={setIsSidebarOpen}
-              chatHistory={chatHistory}
-            />
-          )}
-
-          {/* Main Content */}
-          <div className="flex-1 flex flex-col min-w-0">
-            {/* Conditionally render Header only if token is available */}
-            {token && <Header onMenuClick={() => setIsSidebarOpen(true)} />}
-
-            <Routes>
-              {/* Login Route */}
-              <Route path="/login" element={<Login setToken={setToken} />} />
-
-              {/* Sign Up Route */}
-              <Route path="/signup" element={<Signup />} />
-
-              {/* Protected Routes */}
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute>
-                    <ChatInterface setChatHistory={setChatHistory} />
-                  </ProtectedRoute>
-                }
+    <DarkModeProvider>
+      <ChakraProvider>
+        <Router>
+          <ScrollToTop/>
+          <div className=" flex overflow-hidden ">
+            {/* Sidebar */}
+            {token && (
+              <Sidebar
+                isOpen={isSidebarOpen}
+                setIsOpen={setIsSidebarOpen}
+                chatHistory={chatHistory}
               />
-              <Route
-                path="/reportform"
-                element={
-                  <ProtectedRoute>
+            )}
+
+            {/* Main Content */}
+            <div className="flex-1 flex flex-col min-w-0">
+              {/* Conditionally render Header only if token is available */}
+              {token && <Header onMenuClick={() => setIsSidebarOpen(true)} />}
+
+              <Routes>
+                {/* Login Route */}
+                <Route path="*" element={<LandingPage />} />
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/login" element={<Login setToken={setToken} />} />
+
+                {/* Sign Up Route */}
+                <Route path="/signup" element={<Signup />} />
+
+                {/* Protected Routes */}
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <ChatInterface setChatHistory={setChatHistory} />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/reportform"
+                  element={
+                    // <ProtectedRoute>
                     <ReportForm />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/generationPage"
-                element={
-                  <ProtectedRoute>
-                    <GenerationPage />
-                  </ProtectedRoute>
-                }
-              />
+                    // </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/generationPage"
+                  element={
+                    <ProtectedRoute>
+                      <GenerationPage />
+                    </ProtectedRoute>
+                  }
+                />
 
-              {/* Redirect to login if no token */}
-              <Route path="/" element={<Navigate to="/login" />} />
-              <Route path="*" element={<Navigate to="/login" />} />
-            </Routes>
+                {/* Redirect to login if no token */}
+                <Route path="/" element={<Navigate to="/login" />} />
+                <Route path="*" element={<Navigate to="/login" />} />
+                <Route path="/forgotpassword" element={<ForgotPassword />} />
+                <Route path="/contact" element={<ContactUs />} />
+
+                <Route path="/about" element={<About />} />
+                <Route
+                  path="/terms-and-conditions"
+                  element={<TermsAndConditions />}
+                />
+
+                <Route path="/refund-policy" element={<ReturnsAndRefunds />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              </Routes>
+            </div>
           </div>
-        </div>
-      </Router>
-    </ChakraProvider>
+        </Router>
+      </ChakraProvider>
+    </DarkModeProvider>
   );
 }
 

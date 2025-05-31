@@ -1,6 +1,6 @@
 import { Avatar, Text, Button } from "@chakra-ui/react";
 import { Menu, LogOut } from "lucide-react";
-import logo from "../assets/logoGreen.png";
+import logo from "../assets/logo/logowhitebg.png";
 export default function Header({ onMenuClick, onLogout }) {
   const username = localStorage.getItem("username");
   const email = localStorage.getItem("email");

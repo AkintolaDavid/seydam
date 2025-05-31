@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Plus, MessageSquare, Trash2 } from "lucide-react";
 
-import logo from "../assets/logo.png";
+import logo from "../assets/logo/logoblackbg.png";
 export default function Sidebar({ isOpen, setIsOpen, chatHistory }) {
   return (
     <>

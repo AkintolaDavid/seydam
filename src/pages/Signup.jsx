@@ -4,7 +4,8 @@ import axios from "axios";
 import { Eye, EyeOff, UserPlus } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
-import logo from "../assets/logoGreen.png";
+import logo from "../assets/logo/logowhitebg.png";
+import { FaAngleLeft } from "react-icons/fa";
 export default function Signup() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [username, setUsername] = useState("");
@@ -68,7 +69,18 @@ export default function Signup() {
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
-      {/* Form Section */}
+      {/* Form Section */}{" "}
+      <button
+        onClick={() => {
+          navigate("/");
+        }}
+        className="absolute top-10 left-8 flex items-center "
+      >
+        <div className="p-[6px] border-[2px] text-[#1a1a8c] border-[#1a1a8c] rounded-lg">
+          <FaAngleLeft className="text-[#1a1a8c]" />
+        </div>{" "}
+        <span className="text-lg ml-1 font-medium text-[#1a1a8c]">Back</span>
+      </button>
       <div className="flex-1 flex items-center justify-center p-8 lg:p-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -76,7 +88,7 @@ export default function Signup() {
           className="w-full max-w-md space-y-8"
         >
           {/* Logo */}
-          <div className="flex justify-center lg:justify-start">
+          <div className="flex justify-start">
             <img
               src={logo}
               alt="Logo"
@@ -89,10 +101,10 @@ export default function Signup() {
           {/* Header */}
           <div className="space-y-2">
             <h2 className="text-3xl font-bold tracking-tight">
-              Create an account
+              Create An Account
             </h2>
-            <p className="text-gray-500">
-              Please enter your details to sign up
+            <p className="text-gray-900">
+              Please enter your details to register
             </p>
           </div>
 
@@ -112,8 +124,8 @@ export default function Signup() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
-                  className="mt-1 block w-full rounded-lg border border-[#16A34A] px-4 py-3 placeholder-gray-400 
-                           focus:outline-none focus:ring-0 focus:border-[#16A34A]"
+                  className="mt-1 block w-full rounded-lg border border-[#1a1a8c] px-4 py-3 placeholder-gray-400 
+                           focus:outline-none focus:ring-0 focus:border-[#1a1a8c]"
                   placeholder="Enter your full name"
                 />
               </div>
@@ -131,8 +143,8 @@ export default function Signup() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="mt-1 block w-full rounded-lg border border-[#16A34A] px-4 py-3 placeholder-gray-400 
-                           focus:outline-none focus:ring-0 focus:border-[#16A34A]"
+                  className="mt-1 block w-full rounded-lg border border-[#1a1a8c] px-4 py-3 placeholder-gray-400 
+                           focus:outline-none focus:ring-0 focus:border-[#1a1a8c]"
                   placeholder="Enter your email"
                 />
               </div>
@@ -150,8 +162,8 @@ export default function Signup() {
                     value={password1}
                     onChange={(e) => setPassword1(e.target.value)}
                     required
-                    className="block w-full rounded-lg border border-[#16A34A] px-4 py-3 placeholder-gray-400 
-                             focus:outline-none focus:ring-0 focus:border-[#16A34A] pr-12"
+                    className="block w-full rounded-lg border border-[#1a1a8c] px-4 py-3 placeholder-gray-400 
+                             focus:outline-none focus:ring-0 focus:border-[#1a1a8c] pr-12"
                     placeholder="Create a password"
                   />
                   <button
@@ -177,8 +189,8 @@ export default function Signup() {
                     value={password2}
                     onChange={(e) => setPassword2(e.target.value)}
                     required
-                    className="block w-full rounded-lg border border-[#16A34A] px-4 py-3 placeholder-gray-400 
-                             focus:outline-none focus:ring-0 focus:border-[#16A34A] pr-12"
+                    className="block w-full rounded-lg border border-[#1a1a8c] px-4 py-3 placeholder-gray-400 
+                             focus:outline-none focus:ring-0 focus:border-[#1a1a8c] pr-12"
                     placeholder="Confirm password"
                   />
                   <button
@@ -196,8 +208,8 @@ export default function Signup() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="relative w-full flex justify-center items-center px-4 py-3 text-white bg-[#16A34A] 
-                         rounded-lg hover:bg-[#15c857] 
+                className="relative w-full flex justify-center items-center px-4 py-3 text-white bg-[#1a1a8c] 
+                         rounded-lg 
                          focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
@@ -205,15 +217,15 @@ export default function Signup() {
                 ) : (
                   <>
                     <UserPlus className="w-5 h-5 mr-2" />
-                    Sign up
+                    Register
                   </>
                 )}
               </button>
 
-              <p className="text-center text-sm text-gray-500">
+              <p className="text-center text-base text-gray-600">
                 Already have an account?{" "}
-                <Link to="/login" className="font-medium text-[#16A34A]">
-                  Sign in
+                <Link to="/login" className="font-medium text-[#1a1a8c]">
+                  Click To Sign In
                 </Link>
               </p>
             </div>

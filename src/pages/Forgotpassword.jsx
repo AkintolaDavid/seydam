@@ -5,7 +5,7 @@ import { Eye, EyeOff, LogIn } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo/logowhitebg.png";
 import { FaAngleLeft } from "react-icons/fa6";
-export default function Login({ setToken }) {
+export default function ForgotPassword() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,7 +48,7 @@ export default function Login({ setToken }) {
     <div className="min-h-screen flex flex-col lg:flex-row">
       <button
         onClick={() => {
-          navigate("/");
+          navigate("/login");
         }}
         className="absolute top-10 left-8 flex items-center "
       >
@@ -76,10 +76,10 @@ export default function Login({ setToken }) {
           </div>
           {/* Header */}
           <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tight">Welcome Back!</h2>
-            <p className="text-gray-00">
-              Please enter your details and login below
-            </p>
+            <h2 className="text-3xl font-bold tracking-tight">
+              Forgot Password
+            </h2>
+            <p className="text-gray-00">Please enter your registered Email</p>
           </div>
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -102,34 +102,6 @@ export default function Login({ setToken }) {
                   placeholder="Enter your email"
                 />
               </div>
-
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Password
-                </label>
-                <div className="relative mt-1">
-                  <input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    className="block bg-white  w-full rounded-lg border border-[#1a1a8c] px-4 py-3  
-                             focus pr-12"
-                    placeholder="Enter your password"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  >
-                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                  </button>
-                </div>
-              </div>
             </div>
 
             <div className="space-y-3">
@@ -143,26 +115,9 @@ export default function Login({ setToken }) {
                 {isLoading ? (
                   <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 ) : (
-                  <>
-                    <LogIn className="w-5 h-5 mr-2" />
-                    Sign in
-                  </>
+                  <>Submit</>
                 )}
               </button>
-              <span className="flex items-end  justify-end text-right text-base text-gray-600">
-                <Link
-                  to="/forgotpassword"
-                  className="font-medium text-[#1a1a8c]"
-                >
-                  Forgot password?
-                </Link>
-              </span>
-              <p className="text-center text-base text-gray-800">
-                Don't have an account yet?{" "}
-                <Link to="/signup" className="font-medium text-[#1a1a8c]">
-                  Click To Register
-                </Link>
-              </p>
             </div>
           </form>
         </motion.div>
