@@ -31,7 +31,7 @@ export default function FAQSection() {
         </div>
 
         {/* Right Side */}
-        <div className="flex-1 w-full bg-gray-50 p-6 rounded-xl space-y-4">
+        <div className="flex-1 w-full bg-gray-50 px-2 py-6 rounded-xl space-y-4">
           {faqs.map((question, index) => (
             <div key={index} className="border-b pb-4">
               <button

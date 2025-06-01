@@ -12,51 +12,38 @@ const About = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <div className="relative overflow-hidden w-full min-h-screen bg-white  text-gray-900  px-0 pt-10 sm:pt-20 font-sans">
-      <div className="max-w-5xl mx-auto space-y-16">
+      <div className="px-[20px] md:px-[65px] lg:px-[104px] mx-auto max-w-[105rem] space-y-10 sm:space-y-16">
         {/* <Navbar hideAuthButtons={true} /> */}
         <Navbar />
 
         {/* Caption */}
-        <div className="text-center">
-          <h1 className="text-left text-4xl sm:text-5xl w-[90%] font-semibold text-gray-900 sm:mb-4  mx-4 sm:mx-0">
-            We generate Top Quality Report With AI Assistance. Providing excellent Services is our AIM.
+        <div className="text-center pt-2 sm:pt-0">
+          <h1 className="text-left text-3xl sm:text-4xl lg:text-5xl sm:w-[90%] font-semibold text-gray-900 leading-tight sm:leading-loose ">
+            SEYDAM AI Is Focused On Delivering Top Quality Report With AI
+            Assistance.
           </h1>
         </div>
 
         {/* <!-- Image Section --> */}
-        <div className="sm:mt-4 space-y-2">
+        <div className="mt-0 sm:mt-4 space-y-2">
           {/* <!-- Top Large Image --> */}
           <img
             src={img1}
             alt="Team brainstorming"
-            className="w-full object-cover h-80 sm:h-[500px] rounded-lg shadow"
+            className="w-full object-cover h-80 sm:h-[500px] lg:h-[700px] rounded-lg shadow"
           />
-
-          {/* <!-- Bottom Two Images Side by Side --> */}
-          <div className="flex gap-2">
-            <img
-              src={img1}
-              alt="Team outdoors"
-              className="w-1/2 h-80 rounded-lg shadow hidden md:block"
-            />
-            <img
-              src={img1}
-              alt="Lab team"
-              className="w-full md:w-1/2 h-80 rounded-lg shadow"
-            />
-          </div>
         </div>
 
         {/* Values */}
-        <div className="py-8">
-          <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-8 mx-4 sm:mx-0">
+        <div className="py-4 sm:py-8">
+          <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-6 sm:mb-8">
             Our Values
           </h2>
 
           {/* <!-- Grid for Values --> */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-700 mx-4 sm:mx-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-700">
             {/* <!-- Value 1 --> */}
-            <div className="border-t border-gray-400 pt-4 w-full">
+            <div className="border-t border-gray-400 pt-2 sm:pt-4 w-full">
               <h3 className="font-semibold text-2xl text-gray-900">Be Bold</h3>
               <p className="mt-1 text-base">
                 We are ambitious and non-complacent. We have a hunger to achieve
@@ -66,7 +53,7 @@ const About = () => {
             </div>
 
             {/* <!-- Value 2 --> */}
-            <div className="border-t border-gray-400 pt-4 w-full">
+            <div className="border-t border-gray-400 pt-2 sm:pt-4 w-full">
               <h3 className="font-semibold text-2xl text-gray-900">Be Lean</h3>
               <p className="mt-1 text-base">
                 We use the least to achieve the most. We avoid waste of time and
@@ -75,7 +62,7 @@ const About = () => {
             </div>
 
             {/* <!-- Value 3 --> */}
-            <div className="border-t border-gray-400 pt-4 w-full">
+            <div className="border-t border-gray-400 pt-2 sm:pt-4 w-full">
               <h3 className="font-semibold text-2xl text-gray-900">
                 Be Unorthodox
               </h3>
@@ -87,7 +74,7 @@ const About = () => {
             </div>
 
             {/* <!-- Value 4 --> */}
-            <div className="border-t border-gray-400 pt-4 w-full text-sm">
+            <div className="border-t border-gray-400 pt-2 sm:pt-4 w-full text-sm">
               <h3 className="font-semibold text-2xl text-gray-900">
                 Be Scholarly
               </h3>
@@ -102,10 +89,10 @@ const About = () => {
 
         {/*Team*/}
         <div className="pb-10 sm:pb-16">
-          <h2 className="text-3xl md:text-4xl text-gray-900 font-semibold mb-8 mx-4 sm:mx-0">
+          <h2 className="text-3xl md:text-4xl text-gray-900 font-semibold mb-4 sm:mb-8">
             Our Team
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mx-4 sm:mx-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
               <img
                 src="#"

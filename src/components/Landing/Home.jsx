@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <section
       id="home"
-      className="relative  max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 md:py-40 lg:py-60 justify-between bg-white flex flex-col lg:flex-row gap-14 lg:gap-0 items-center overflow-hidden text-gray-900 transition-colors duration-300"
+      className="relative px-[20px] md:px-[65px] lg:px-[104px] mx-auto max-w-[105rem] py-20 sm:py-28 md:py-40 lg:py-60 justify-between bg-white flex flex-col lg:flex-row gap-14 lg:gap-0 items-center overflow-hidden text-gray-900 transition-colors duration-300"
     >
       <div className="relative text-center">
         <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight pt-14 ">
@@ -45,7 +45,7 @@ const Home = () => {
         </p>
 
         <div className="flex justify-center mt-6">
-          <Link to="/get-started">
+          <Link to="/signup">
             <button className="flex items-center gap-2 px-6 py-3 bg-[#1A1A8C] text-white rounded-md  transition duration-200">
               Get Started
               <FiFeather className="text-white" />
@@ -57,7 +57,7 @@ const Home = () => {
         <img
           src={homoeimg}
           alt="homeimg"
-          className="w-[90%] ml-[5%] lg:w-[500px]"
+          className="w-[90%] ml-[5%] lg:w-[600px]"
         />
       </div>
     </section>

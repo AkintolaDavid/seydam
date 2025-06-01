@@ -8,7 +8,7 @@ export default function ContactUs() {
     <div className="flex flex-col min-h-screen">
       <Navbar />
       {/* Hero Banner */}
-      <div className="pt-40 flex justify-center ">
+      <div className="pt-28 sm:pt-40 flex justify-center ">
         {" "}
         <motion.div
           className="text-center text-black max-w-4xl px-6"
@@ -22,7 +22,7 @@ export default function ContactUs() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Reach Out To Us
+            Contact Us
           </motion.h1>
 
           <motion.div

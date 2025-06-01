@@ -9,9 +9,9 @@ import logo from "../../assets/logo/logoblackbg.png";
 const Footer = () => (
   <footer
     id="footer"
-    className="relative bg-[#1a1a8c] text-white py-16 overflow-hidden"
+    className="relative bg-[#000000] text-white py-16 overflow-hidden"
   >
-    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="relative px-[20px] md:px-[65px] lg:px-[104px] mx-auto max-w-[105rem]">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Logo & Tagline */}
         <div className="">

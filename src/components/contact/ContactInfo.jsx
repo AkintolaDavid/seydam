@@ -42,7 +42,7 @@ const ContactInfo = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        Contact Information
+        Reach Out To Us
       </motion.h2>
       <div className="relative z-30">
         <div className="space-y-8">

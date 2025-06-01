@@ -28,7 +28,7 @@ const services = [
   {
     image: img2,
     icon: <FaSlideshare className="text-green-600 w-8 h-8" />,
-    title: "Reports Are Genrated Based On Instructions",
+    title: "Reports Are Generated Based On Instructions",
     description:
       "Automatically generate polished slide decks that highlight your report’s key points — ready to present.",
   },
@@ -52,41 +52,43 @@ const Services = () => {
   return (
     <section
       id="services"
-      className="relative bg-white overflow-hidden py-16 sm:py-24 dark:bg-gray-900 text-gray-900 dark:text-white  shadow-sm p-4 transition-all "
+      className="relative bg-[#1a1a8c] text-white overflow-hidden py-16 sm:py-24 shadow-sm p-4 transition-all "
     >
       <div className="relative max-w-7xl flex flex-col justify-center items-center mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <h2 className="text-4xl font-semibold text-gray-900 dark:text-white text-center">
+        <h2 className="text-4xl font-semibold  text-center">
           Seydam AI Core Features
         </h2>
-        <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 text-center max-w-2xl mx-auto">
-          We Provide User Friendly Features That Enhance Report Writing While
-          You Are In Control.
+        <p className="sm:block hidden mt-4 text-lg  text-center max-w-2xl mx-auto">
+          We Provide Features That Enhance Report Writing While You Are In
+          Control
         </p>
 
         {/* Services Grid */}
-        <div className="mt-12 grid gap-10 grid-cols-1 md:grid-cols-2">
+        <div className="mt-7 sm:mt-12 grid gap-5 sm:gap-10 grid-cols-1 md:grid-cols-2">
           {services.map((svc) => (
             <div
               key={svc.title}
-              className="flex flex-col items-start gap-2 w-full sm:w-[400px] lg:w-[500px]"
+              className="relative flex flex-col items-start gap-2 w-full sm:w-[450px] lg:w-[550px] border-[2px] border-[#1a1a8c] p-2 rounded-lg"
             >
+              {" "}
+              <div className="flex items-center gap-2">
+                <div className="min-h-2 min-w-2 bg-white rounded-full"></div>{" "}
+                <h3 className=" text-2xl font-semibold ">{svc.title}</h3>
+                {/* <p className="mt-0  font-medium">
+              {svc.description}
+            </p> */}
+              </div>
               {svc?.image && (
                 <div>
                   <img
                     src={svc.image}
                     alt="img"
-                    className="h-[200px] sm:h-[250px] lg:h-[300px] w-[375px] sm:w-[400px] lg:w-[500px] rounded-lg"
+                    className="h-[200px] sm:h-[250px] lg:h-[300px] w-[374px] sm:w-[400px] lg:w-[500px] rounded-lg shadow-sm"
                   />
                 </div>
               )}
               {/* <div className="flex-shrink-0">{svc.icon}</div> */}
-              <div>
-                <h3 className="text-2xl font-semibold text-white">
-                  {svc.title}
-                </h3>
-                <p className="mt-0 text-white">{svc.description}</p>
-              </div>
             </div>
           ))}
         </div>

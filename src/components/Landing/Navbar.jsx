@@ -52,7 +52,7 @@ const Navbar = () => {
         isScrolled ? "bg-white shadow-sm" : "bg-white"
       }`}
     >
-      <div className="container mx-auto px-4 py-6">
+      <div className="container px-[20px] md:px-[65px] lg:px-[104px] mx-auto max-w-[105rem] py-6">
         <div className="flex justify-between items-center">
           {/* Logo - Left */}
           <div className="flex items-center">
