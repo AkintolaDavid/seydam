@@ -17,20 +17,13 @@ export default function ContactUs() {
           transition={{ duration: 0.8 }}
         >
           <motion.h1
-            className="text-4xl md:text-5xl font-semibold mb-2 text-[#1a1a8c]"
+            className="text-4xl md:text-5xl font-semibold mb-2 text-[#000000]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             Contact Us
           </motion.h1>
-
-          <motion.div
-            className="w-24 h-1 bg-[#1a1a8c] mx-auto mt-0"
-            initial={{ width: 0 }}
-            animate={{ width: 96 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          />
         </motion.div>
       </div>
       {/* Contact Information and Form Section */}
@@ -39,16 +32,15 @@ export default function ContactUs() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Information */}
             <div className="order-2 lg:order-1">
-              <ContactInfo />
-            </div>
-
-            {/* Contact Form */}
-            <div className="order-1 lg:order-2">
               <ContactForm
                 title="Send Us a Message"
                 subtitle="We'd love to hear from you. Fill out the form below and we'll get back to you as soon as possible."
               />
+            </div>{" "}
+            <div className="order-1 lg:order-2">
+              <ContactInfo />
             </div>
+            {/* Contact Form */}
           </div>
         </div>
       </section>

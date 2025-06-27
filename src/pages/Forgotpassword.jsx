@@ -25,7 +25,7 @@ export default function ForgotPassword() {
 
       setMessage(response.data.message);
       console.log(response.data);
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("seydamtoken", response.data.token);
       setToken(response.data.token); // ✅ Update token state
       localStorage.setItem("email", response.data.email);
       localStorage.setItem("username", response.data.username);
@@ -42,7 +42,7 @@ export default function ForgotPassword() {
   };
 
   useEffect(() => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("seydamtoken");
   }, []);
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
@@ -52,10 +52,10 @@ export default function ForgotPassword() {
         }}
         className="absolute top-10 left-8 flex items-center "
       >
-        <div className="p-[6px] border-[2px] text-[#1a1a8c] border-[#1a1a8c] rounded-lg">
-          <FaAngleLeft className="text-[#1a1a8c]" />
+        <div className="p-[6px] border-[2px] text-[#0D0D82] border-[#0D0D82] rounded-lg">
+          <FaAngleLeft className="text-[#0D0D82]" />
         </div>{" "}
-        <span className="text-lg ml-1 font-medium text-[#1a1a8c]">Back</span>
+        <span className="text-lg ml-1 font-medium text-[#0D0D82]">Back</span>
       </button>
       {/* Form Section */}
       <div className="flex-1 flex items-center justify-center p-8 lg:p-12">
@@ -97,8 +97,8 @@ export default function ForgotPassword() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="mt-1 bg-white block w-full rounded-lg border border-[#1a1a8c] px-4 py-3 
-             focus:outline-none focus:ring-0 focus:border-[#1a1a8c]"
+                  className="mt-1 bg-white block w-full rounded-lg border border-[#0D0D82] px-4 py-3 
+             focus:outline-none focus:ring-0 focus:border-[#0D0D82]"
                   placeholder="Enter your email"
                 />
               </div>
@@ -108,8 +108,8 @@ export default function ForgotPassword() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="relative w-full flex justify-center items-center px-4 py-3 text-white bg-[#1a1a8c] 
-                         rounded-lg  focus:outline-none focus:ring-2 focus:ring-[#1a1a8c] 
+                className="relative w-full flex justify-center items-center px-4 py-3 text-white bg-[#0D0D82] 
+                         rounded-lg  focus:outline-none focus:ring-2 focus:ring-[#0D0D82] 
                          focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (

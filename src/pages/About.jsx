@@ -3,29 +3,37 @@ import React, { useState } from "react";
 //import Navbar from '../components/Navbar';
 // import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import img1 from "../assets/about/img1.jpg";
-import teamImage from "../assets/iphone.png";
-import { FiMenu, FiX } from "react-icons/fi";
 import Navbar from "../components/Landing/Navbar";
 import Footer from "../components/Landing/Footer";
-
+import oye from "../assets/team/oye.jpg";
+import { TbSpeakerphone } from "react-icons/tb";
+import { MdOutlineSearch } from "react-icons/md";
+import {
+  FaGithub,
+  FaInstagram,
+  FaLinkedin,
+  FaLinkedinIn,
+  FaUsersLine,
+} from "react-icons/fa6";
+import { FaRegCheckCircle } from "react-icons/fa";
 const About = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <div className="relative overflow-hidden w-full min-h-screen bg-white  text-gray-900  px-0 pt-10 sm:pt-20 font-sans">
-      <div className="px-[20px] md:px-[65px] lg:px-[104px] mx-auto max-w-[105rem] space-y-10 sm:space-y-16">
+      <div className="px-[20px] md:px-[65px] lg:px-[104px] mx-auto max-w-[105rem] space-y-10 sm:space-y-12">
         {/* <Navbar hideAuthButtons={true} /> */}
         <Navbar />
 
         {/* Caption */}
-        <div className="text-center pt-2 sm:pt-0">
+        {/* <div className="text-center pt-2 sm:pt-0">
           <h1 className="text-left text-3xl sm:text-4xl lg:text-5xl sm:w-[90%] font-semibold text-gray-900 leading-tight sm:leading-loose ">
             SEYDAM AI Is Focused On Delivering Top Quality Report With AI
             Assistance.
           </h1>
-        </div>
+        </div> */}
 
         {/* <!-- Image Section --> */}
-        <div className="mt-0 sm:mt-4 space-y-2">
+        <div className="pt-6 sm:pt-0 space-y-2">
           {/* <!-- Top Large Image --> */}
           <img
             src={img1}
@@ -42,9 +50,17 @@ const About = () => {
 
           {/* <!-- Grid for Values --> */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-700">
-            {/* <!-- Value 1 --> */}
+            {/* Value 1 */}
             <div className="border-t border-gray-400 pt-2 sm:pt-4 w-full">
-              <h3 className="font-semibold text-2xl text-gray-900">Be Bold</h3>
+              <div
+                className="inline-flex items-center justify-center w-10 h-10 mb-2 rounded-full"
+                style={{ backgroundColor: "rgba(26, 26, 140, 0.2)" }}
+              >
+                <TbSpeakerphone className="text-[#0D0D82] w-6 h-6 " />
+              </div>{" "}
+              <h3 className="font-semibold text-2xl text-gray-900">
+                Being Bold
+              </h3>
               <p className="mt-1 text-base">
                 We are ambitious and non-complacent. We have a hunger to achieve
                 great goals. We believe that making big bets is better than
@@ -52,36 +68,55 @@ const About = () => {
               </p>
             </div>
 
-            {/* <!-- Value 2 --> */}
+            {/* Value 5 */}
             <div className="border-t border-gray-400 pt-2 sm:pt-4 w-full">
-              <h3 className="font-semibold text-2xl text-gray-900">Be Lean</h3>
+              <div
+                className="inline-flex items-center justify-center w-10 h-10 mb-2 rounded-full"
+                style={{ backgroundColor: "rgba(26, 26, 140, 0.2)" }}
+              >
+                <MdOutlineSearch className="text-[#0D0D82] w-6 h-6 " />
+              </div>{" "}
+              <h3 className="font-semibold text-2xl text-gray-900">
+                Transparency
+              </h3>
               <p className="mt-1 text-base">
-                We use the least to achieve the most. We avoid waste of time and
-                resources by directing energy to high-impact behaviours.
+                We operate with honesty and clarity. We communicate openly about
+                decisions, setbacks, and successes to build trust with our team
+                and users.
               </p>
             </div>
 
-            {/* <!-- Value 3 --> */}
+            {/* Value 6 */}
             <div className="border-t border-gray-400 pt-2 sm:pt-4 w-full">
+              <div
+                className="inline-flex items-center justify-center w-10 h-10 mb-2 rounded-full"
+                style={{ backgroundColor: "rgba(26, 26, 140, 0.2)" }}
+              >
+                <FaUsersLine className="text-[#0D0D82] w-6 h-6 " />
+              </div>{" "}
               <h3 className="font-semibold text-2xl text-gray-900">
-                Be Unorthodox
+                Customer First
               </h3>
               <p className="mt-1 text-base">
-                We make a difference by introducing new perspectives and
-                fighting conformity. We embrace feedback while constantly
-                challenging ideas.
+                We build technology for real people. Empathy is at the core of
+                our design, communication, and product experience.
               </p>
             </div>
 
-            {/* <!-- Value 4 --> */}
-            <div className="border-t border-gray-400 pt-2 sm:pt-4 w-full text-sm">
+            {/* Value 7 */}
+            <div className="border-t border-gray-400 pt-2 sm:pt-4 w-full">
+              <div
+                className="inline-flex items-center justify-center w-10 h-10 mb-2 rounded-full"
+                style={{ backgroundColor: "rgba(26, 26, 140, 0.2)" }}
+              >
+                <FaRegCheckCircle className="text-[#0D0D82] w-6 h-6 " />
+              </div>{" "}
               <h3 className="font-semibold text-2xl text-gray-900">
-                Be Scholarly
+                Accountability
               </h3>
               <p className="mt-1 text-base">
-                Seeking the truth is of utmost importance. We strive to ensure
-                that we minimize major disputes and that our decisions are
-                driven by evidence.
+                We own our actions and their outcomes. We measure success by the
+                value we deliver and learn fast from failure.
               </p>
             </div>
           </div>
@@ -92,106 +127,189 @@ const About = () => {
           <h2 className="text-3xl md:text-4xl text-gray-900 font-semibold mb-4 sm:mb-8">
             Our Team
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
               <img
-                src="#"
+                src={oye}
                 alt="David Park"
-                className="w-12 h-12 rounded-full object-cover"
+                className="w-[70px] h-[70px] sm:w-20 sm:h-20 rounded-full object-cover"
               />
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">
                   Oyewole Temi
                 </h3>
-                <p className="text-sm text-gray-500">CEO</p>
+                <p className="text-sm text-gray-600 font-normal">
+                  CEO / Backend Developer
+                </p>{" "}
+                <span className="flex gap-2 mt-2">
+                  <FaInstagram className=" text-xl" />{" "}
+                  <FaLinkedin className=" text-xl" />
+                  <FaGithub className=" text-xl" />
+                </span>{" "}
               </div>
             </div>
 
             <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
               <img
-                src="#"
+                src={oye}
                 alt="David Park"
-                className="w-12 h-12 rounded-full object-cover"
+                className="w-[70px] h-[70px] sm:w-20 sm:h-20 rounded-full object-cover"
               />
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">
                   Akintola David
                 </h3>
-                <p className="text-sm text-gray-500">CEO</p>
+                <p className="text-sm text-gray-600 font-normal">
+                  Frontend Developer
+                </p>{" "}
+                <span className="flex gap-2 mt-2">
+                  <FaInstagram className=" text-xl" />{" "}
+                  <FaLinkedin className=" text-xl" />
+                  <FaGithub className=" text-xl" />
+                </span>{" "}
               </div>
             </div>
-
             <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
               <img
-                src="#"
+                src={oye}
                 alt="David Park"
-                className="w-12 h-12 rounded-full object-cover"
+                className="w-[70px] h-[70px] sm:w-20 sm:h-20 rounded-full object-cover"
               />
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">Bonike</h3>
-                <p className="text-sm text-gray-500">CEO</p>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Tomiwa Adeaga
+                </h3>
+                <p className="text-sm text-gray-600 font-normal">AI Engineer</p>{" "}
+                <span className="flex gap-2 mt-2">
+                  <FaInstagram className=" text-xl" />{" "}
+                  <FaLinkedin className=" text-xl" />
+                  <FaGithub className=" text-xl" />
+                </span>{" "}
               </div>
             </div>
-
             <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
               <img
-                src="#"
+                src={oye}
                 alt="David Park"
-                className="w-12 h-12 rounded-full object-cover"
+                className="w-[70px] h-[70px] sm:w-20 sm:h-20 rounded-full object-cover"
               />
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">Trabaye</h3>
-                <p className="text-sm text-gray-500">CEO</p>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Ogundinrun AyooluwaTomiwa
+                </h3>
+                <p className="mt-1 text-sm text-gray-600 font-normal">
+                  Finance Manager
+                </p>
+                <span className="flex gap-2 mt-2">
+                  <FaInstagram className=" text-xl" />{" "}
+                  <FaLinkedin className=" text-xl" />
+                  <FaGithub className=" text-xl" />
+                </span>{" "}
               </div>
             </div>
 
             <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
               <img
-                src="#"
+                src={oye}
                 alt="David Park"
-                className="w-12 h-12 rounded-full object-cover"
+                className="w-[70px] h-[70px] sm:w-20 sm:h-20 rounded-full object-cover"
               />
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">Samo</h3>
-                <p className="text-sm text-gray-500">CEO</p>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Igbaroola Samuel
+                </h3>
+                <p className="text-sm text-gray-600 font-normal">
+                  Frontend Developer
+                </p>{" "}
+                <span className="flex gap-2 mt-2">
+                  <FaInstagram className=" text-xl" />{" "}
+                  <FaLinkedin className=" text-xl" />
+                  <FaGithub className=" text-xl" />
+                </span>{" "}
               </div>
             </div>
 
             <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
               <img
-                src="#"
+                src={oye}
                 alt="David Park"
-                className="w-12 h-12 rounded-full object-cover"
+                className="w-[70px] h-[70px] sm:w-20 sm:h-20 rounded-full object-cover"
               />
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">Deo</h3>
-                <p className="text-sm text-gray-500">CEO</p>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Bolaji Samo
+                </h3>
+                <p className="text-sm text-gray-600 font-normal">
+                  Policy And Strategy
+                </p>{" "}
+                <span className="flex gap-2 mt-2">
+                  <FaInstagram className=" text-xl" />{" "}
+                  <FaLinkedin className=" text-xl" />
+                  <FaGithub className=" text-xl" />
+                </span>{" "}
               </div>
             </div>
 
             <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
               <img
-                src="#"
+                src={oye}
                 alt="David Park"
-                className="w-12 h-12 rounded-full object-cover"
+                className="w-[70px] h-[70px] sm:w-20 sm:h-20 rounded-full object-cover"
               />
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">Sola</h3>
-                <p className="text-sm text-gray-500">CEO</p>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Olaoye Daniel
+                </h3>
+                <p className="text-sm text-gray-600 font-normal">
+                  Finance Manager
+                </p>{" "}
+                <span className="flex gap-2 mt-2">
+                  <FaInstagram className=" text-xl" />{" "}
+                  <FaLinkedin className=" text-xl" />
+                  <FaGithub className=" text-xl" />
+                </span>{" "}
               </div>
             </div>
 
             <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
               <img
-                src="#"
+                src={oye}
                 alt="David Park"
-                className="w-12 h-12 rounded-full object-cover"
+                className="w-[70px] h-[70px] sm:w-20 sm:h-20 rounded-full object-cover"
+              />
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Titilayo Olusola
+                </h3>
+                <p className="text-sm text-gray-600 font-normal">
+                  Media And Marketing
+                </p>{" "}
+                <span className="flex gap-2 mt-2">
+                  <FaInstagram className=" text-xl" />{" "}
+                  <FaLinkedin className=" text-xl" />
+                  <FaGithub className=" text-xl" />
+                </span>{" "}
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
+              <img
+                src={oye}
+                alt="David Park"
+                className="w-[70px] h-[70px] sm:w-20 sm:h-20 rounded-full object-cover"
               />
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">
                   Adeleke Konge
                 </h3>
-                <p className="text-sm text-gray-500">CEO</p>
+                <p className="text-sm text-gray-600 font-normal">
+                  Media And Marketing
+                </p>{" "}
+                <span className="flex gap-2 mt-2">
+                  <FaInstagram className=" text-xl" />{" "}
+                  <FaLinkedin className=" text-xl" />
+                  <FaGithub className=" text-xl" />
+                </span>{" "}
               </div>
             </div>
           </div>

@@ -68,19 +68,19 @@ const Navbar = () => {
           <nav className="hidden lg:flex space-x-8">
             <Link
               to="/"
-              className="font-medium text-lg text-gray-900 hover:text-[#000000] transition-colors"
+              className="font-medium text-md text-gray-900 hover:text-[#000000] transition-colors"
             >
               Home
             </Link>
             <Link
               to="/about"
-              className="font-medium text-lg text-gray-900 hover:text-[#000000] transition-colors"
+              className="font-medium text-md text-gray-900 hover:text-[#000000] transition-colors"
             >
               About
             </Link>
             <Link
               to="/contact"
-              className="font-medium text-lg text-gray-900 hover:text-[#000000] transition-colors"
+              className="font-medium text-md text-gray-900 hover:text-[#000000] transition-colors"
             >
               Contact
             </Link>
@@ -91,7 +91,7 @@ const Navbar = () => {
               onClick={() => {
                 navigate("/login");
               }}
-              className=" border-[2px] border-[#1A1A8C] font-semibold text-[#1A1A8C] py-[6px] px-6 rounded-md"
+              className=" border-[2px] border-[#0D0D82] font-semibold text-[#0D0D82] py-[6px] px-6 rounded-md"
             >
               Login
             </button>
@@ -99,7 +99,7 @@ const Navbar = () => {
               onClick={() => {
                 navigate("/signup");
               }}
-              className=" border-[2px] border-[#1A1A8C] bg-[#1A1A8C] font-medium text-[#ffffff] py-[6px] px-6 rounded-md"
+              className=" border-[2px] border-[#0D0D82] bg-[#0D0D82] font-medium text-[#ffffff] py-[6px] px-6 rounded-md"
             >
               Register
             </button>
@@ -110,18 +110,18 @@ const Navbar = () => {
               onClick={() => {
                 navigate("/login");
               }}
-              className=" border-[2px] border-[#1A1A8C] font-semibold text-[#1A1A8C] py-[4px] px-6 rounded-md"
+              className=" border-[2px] border-[#0D0D82] font-semibold text-[#0D0D82] py-[4px] px-6 rounded-md"
             >
               Login
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-[#1A1A8C]"
+              className="text-[#0D0D82]"
             >
               {mobileMenuOpen ? (
                 <IoClose className="h-7 w-7" />
               ) : (
-                <HiMenu className="h-7 w-7 text-[#1A1A8C]" />
+                <HiMenu className="h-7 w-7 text-[#0D0D82]" />
               )}
             </button>
           </div>
@@ -136,7 +136,7 @@ const Navbar = () => {
                 <div className="flex justify-end items-center py-6 pr-8 border-b border-gray-200">
                   <button
                     onClick={() => setMobileMenuOpen(false)}
-                    className="text-[#1A1A8C] border border-[#1a1a8c] rounded-lg w-8 h-8 flex items-center justify-center"
+                    className="text-[#0D0D82] border border-[#0D0D82] rounded-lg w-8 h-8 flex items-center justify-center"
                   >
                     <IoClose className="h-6 w-6" />
                   </button>
@@ -149,7 +149,7 @@ const Navbar = () => {
                         setMobileMenuOpen(false);
                         navigate("/");
                       }}
-                      className="w-full flex items-center space-x-3 border-[2px] border-[#1a1a8c] text-[#1A1A8C] py-2 px-3 rounded-lg hover:bg-opacity-90 transition-colors"
+                      className="w-full flex items-center space-x-3 border-[2px] border-[#0D0D82] text-[#0D0D82] py-2 px-3 rounded-lg hover:bg-opacity-90 transition-colors"
                     >
                       <FaHome className="h-[20px] w-[20px]" />
                       <span className="font-medium">Home</span>
@@ -160,7 +160,7 @@ const Navbar = () => {
                         setMobileMenuOpen(false);
                         navigate("/about");
                       }}
-                      className="w-full flex items-center space-x-3 border-[2px] border-[#1a1a8c] text-[#1A1A8C] py-2 px-3 rounded-lg hover:bg-opacity-90 transition-colors"
+                      className="w-full flex items-center space-x-3 border-[2px] border-[#0D0D82] text-[#0D0D82] py-2 px-3 rounded-lg hover:bg-opacity-90 transition-colors"
                     >
                       <FaInfoCircle className="h-[20px] w-[20px]" />
                       <span className="font-medium">About</span>
@@ -170,7 +170,7 @@ const Navbar = () => {
                         setMobileMenuOpen(false);
                         navigate("/contact");
                       }}
-                      className="w-full flex items-center space-x-3 border-[2px] border-[#1a1a8c] text-[#1A1A8C] py-2 px-3 rounded-lg hover:bg-opacity-90 transition-colors"
+                      className="w-full flex items-center space-x-3 border-[2px] border-[#0D0D82] text-[#0D0D82] py-2 px-3 rounded-lg hover:bg-opacity-90 transition-colors"
                     >
                       <FaEnvelope className="h-[20px] w-[20px]" />
                       <span className="font-medium">Contact Us</span>
@@ -180,7 +180,7 @@ const Navbar = () => {
                         setMobileMenuOpen(false);
                         navigate("/login");
                       }}
-                      className="w-full flex items-center space-x-3 border-[2px] border-[#1a1a8c] text-[#1A1A8C] py-2 px-3 rounded-lg hover:bg-opacity-90 transition-colors"
+                      className="w-full flex items-center space-x-3 border-[2px] border-[#0D0D82] text-[#0D0D82] py-2 px-3 rounded-lg hover:bg-opacity-90 transition-colors"
                     >
                       <LogIn className="h-[20px] w-[20px]" />
                       <span className="font-medium">Login</span>
@@ -190,7 +190,7 @@ const Navbar = () => {
                         setMobileMenuOpen(false);
                         navigate("/signup");
                       }}
-                      className="w-full flex items-center space-x-3 border-[2px] border-[#1a1a8c] text-[#1A1A8C] py-2 px-3 rounded-lg hover:bg-opacity-90 transition-colors"
+                      className="w-full flex items-center space-x-3 border-[2px] border-[#0D0D82] text-[#0D0D82] py-2 px-3 rounded-lg hover:bg-opacity-90 transition-colors"
                     >
                       <UserPlus className="h-[20px] w-[20px]" />
                       <span className="font-medium">Register</span>

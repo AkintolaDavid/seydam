@@ -99,7 +99,7 @@ const ContactForm = ({ title, subtitle }) => {
 
   return (
     <motion.div
-      className="bg-white px-6  py-4 rounded-xl shadow-sm border border-gray-100"
+      className="bg-white px-6  py-4 rounded-xl "
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -210,7 +210,7 @@ const ContactForm = ({ title, subtitle }) => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full bg-[#1a1a8c] text-white font-medium py-3 px-6 rounded-lg shadow-sm hover:shadow-sm transition-all duration-300 flex items-center justify-center ${
+              className={`w-full bg-[#000145] text-white font-medium py-3 px-6 rounded-lg shadow-sm hover:shadow-sm transition-all duration-300 flex items-center justify-center ${
                 isSubmitting
                   ? "opacity-70 cursor-not-allowed"
                   : "hover:-translate-y-1"

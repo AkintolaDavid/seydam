@@ -52,7 +52,7 @@ const Services = () => {
   return (
     <section
       id="services"
-      className="relative bg-[#1a1a8c] text-white overflow-hidden py-16 sm:py-24 shadow-sm p-4 transition-all "
+      className="relative bg-[#000000] text-white overflow-hidden py-16 sm:py-24 shadow-sm p-4 transition-all "
     >
       <div className="relative max-w-7xl flex flex-col justify-center items-center mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
@@ -69,7 +69,7 @@ const Services = () => {
           {services.map((svc) => (
             <div
               key={svc.title}
-              className="relative flex flex-col items-start gap-2 w-full sm:w-[450px] lg:w-[550px] border-[2px] border-[#1a1a8c] p-2 rounded-lg"
+              className="relative flex flex-col items-start gap-2 w-full sm:w-[550px] lg:w-[650px] p-2 rounded-lg"
             >
               {" "}
               <div className="flex items-center gap-2">
@@ -84,7 +84,7 @@ const Services = () => {
                   <img
                     src={svc.image}
                     alt="img"
-                    className="h-[200px] sm:h-[250px] lg:h-[300px] w-[374px] sm:w-[400px] lg:w-[500px] rounded-lg shadow-sm"
+                    className="h-[200px] sm:h-[300px] lg:h-[350px] w-[374px] sm:w-[500px] lg:w-[600px] rounded-lg shadow-sm"
                   />
                 </div>
               )}

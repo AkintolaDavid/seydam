@@ -5,11 +5,13 @@ import { Eye, EyeOff, LogIn } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo/logowhitebg.png";
 import { FaAngleLeft } from "react-icons/fa6";
+import { useToast } from "@chakra-ui/react";
 export default function Login({ setToken }) {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const toast = useToast();
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,25 +26,40 @@ export default function Login({ setToken }) {
       });
 
       setMessage(response.data.message);
-      console.log(response.data);
-      localStorage.setItem("token", response.data.token);
+
+      localStorage.setItem("seydamtoken", response.data.token);
       setToken(response.data.token); // ✅ Update token state
       localStorage.setItem("email", response.data.email);
       localStorage.setItem("username", response.data.username);
+      toast({
+        title: "Login Successful",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
       if (response?.data?.hadUserGenerated === false) {
         navigate("/reportform");
       } else {
         navigate("/generationPage");
       }
     } catch (error) {
+      console.log(error);
       setError(error.response?.data?.error || "Error logging in");
+      toast({
+        description: error.response?.data?.error || "Error Trying To Login.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("seydamtoken");
   }, []);
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
@@ -52,10 +69,10 @@ export default function Login({ setToken }) {
         }}
         className="absolute top-10 left-8 flex items-center "
       >
-        <div className="p-[6px] border-[2px] text-[#1a1a8c] border-[#1a1a8c] rounded-lg">
-          <FaAngleLeft className="text-[#1a1a8c]" />
+        <div className="p-[6px] border-[2px] text-[#0D0D82] border-[#0D0D82] rounded-lg">
+          <FaAngleLeft className="text-[#0D0D82]" />
         </div>{" "}
-        <span className="text-lg ml-1 font-medium text-[#1a1a8c]">Back</span>
+        <span className="text-lg ml-1 font-medium text-[#0D0D82]">Back</span>
       </button>
       {/* Form Section */}
       <div className="flex-1 flex items-center justify-center p-8 lg:p-12">
@@ -97,8 +114,8 @@ export default function Login({ setToken }) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="mt-1 bg-white block w-full rounded-lg border border-[#1a1a8c] px-4 py-3 
-             focus:outline-none focus:ring-0 focus:border-[#1a1a8c]"
+                  className="mt-1 bg-white block w-full rounded-lg border border-[#0D0D82] px-4 py-3 
+             focus:outline-none focus:ring-0 focus:border-[#0D0D82]"
                   placeholder="Enter your email"
                 />
               </div>
@@ -117,7 +134,7 @@ export default function Login({ setToken }) {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="block bg-white  w-full rounded-lg border border-[#1a1a8c] px-4 py-3  
+                    className="block bg-white  w-full rounded-lg border border-[#0D0D82] px-4 py-3  
                              focus pr-12"
                     placeholder="Enter your password"
                   />
@@ -136,8 +153,8 @@ export default function Login({ setToken }) {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="relative w-full flex justify-center items-center px-4 py-3 text-white bg-[#1a1a8c] 
-                         rounded-lg  focus:outline-none focus:ring-2 focus:ring-[#1a1a8c] 
+                className="relative w-full flex justify-center items-center px-4 py-3 text-white bg-[#0D0D82] 
+                         rounded-lg  focus:outline-none focus:ring-2 focus:ring-[#0D0D82] 
                          focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
@@ -152,14 +169,14 @@ export default function Login({ setToken }) {
               <span className="flex items-end  justify-end text-right text-base text-gray-600">
                 <Link
                   to="/forgotpassword"
-                  className="font-medium text-[#1a1a8c]"
+                  className="font-medium text-[#0D0D82]"
                 >
                   Forgot password?
                 </Link>
               </span>
               <p className="text-center text-base text-gray-800">
                 Don't have an account yet?{" "}
-                <Link to="/signup" className="font-medium text-[#1a1a8c]">
+                <Link to="/signup" className="font-medium text-[#0D0D82]">
                   Click To Register
                 </Link>
               </p>

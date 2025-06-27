@@ -15,6 +15,8 @@ import {
   Progress,
   useToast,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const ReportForm = () => {
   const [topic, setTopic] = useState("");
   const [understanding, setUnderstanding] = useState("");
@@ -25,10 +27,10 @@ const ReportForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const fileInputRef = useRef(null);
   const toast = useToast();
-
+  const navigate = useNavigate();
   // Import baseUrl from environment variables
-  const baseUrl = import.meta.env.VITE_API_BASE_URL;
-
+  const baseUrl = import.meta.env.VITE_BASE_URL;
+  const token = localStorage.getItem("seydamtoken");
   const handleFileChange = (e) => {
     if (e.target.files) {
       setFiles(Array.from(e.target.files));
@@ -67,38 +69,59 @@ const ReportForm = () => {
       return newValue < 0 ? 0 : newValue;
     });
   };
-
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   navigate("/report-structure");
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      // Prepare form data
-      const payload = {
-        topic,
-        understanding,
-        guidelines,
-        includeImages,
-        referenceCount,
-        files,
-      };
-
-      const response = await fetch(`${baseUrl}generation/`, {
-        method: "POST",
-        body: payload,
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to submit report");
-      }
+      const response = await axios.post(
+        `${baseUrl}outline/`,
+        {
+          topic,
+          description: understanding,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${token}`,
+          },
+        }
+      ); 
+      console.log(response)
+      // // Prepare form data
+      // const payload = {
+      //   topic,
+      //   understanding,
+      //   // guidelines,
+      //   // includeImages,
+      //   // referenceCount,
+      //   // files,
+      // };
+      // console.log(payload);
+      // const response = await fetch(`${baseUrl}outline/`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: `Token ${token}`,
+      //   },
+      //   body: payload,
+      // });
+      // console.log(response);
+      // if (!response.ok) {
+      //   throw new Error("Failed to submit report");
+      // }
 
       // Show success message
       toast({
-        title: "Report Submitted",
-        description: "Your report information has been submitted successfully!",
+        title: "Report Form Submitted", 
         status: "success",
         duration: 5000,
         isClosable: true,
+        position:"top-right"
       });
 
       // Reset form
@@ -107,11 +130,16 @@ const ReportForm = () => {
       setGuidelines("");
       setFiles([]);
       setIncludeImages(false);
-      setReferenceCount(5);
+      setReferenceCount(5); 
+      const structureData =  response.data
+console.log(structureData)
+      // Navigate to structure editor with the data
+      navigate("/report-structure", {
+        state: { structureData ,topic:topic,description:understanding},
+      })
     } catch (error) {
       toast({
-        title: "Submission Error",
-        description: error.message,
+        title: error.response?.data?.error,
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -122,19 +150,19 @@ const ReportForm = () => {
   };
 
   return (
-    <div className="w-full mx-auto px-6 sm:px-10 mt-10 sm:mt-14">
+    <div className="w-full mx-auto px-6 sm:px-10 mt-10 sm:mt-14 mb-10 sm:mb-4">
       <div className="w-full flex justify-center items-center">
         <img src={logo} className="h-16 mb-16" />
       </div>
       {isSubmitting && (
         <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-50 z-50">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-[#1a1a8c] border-solid" />
+          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-[#0D0D82] border-solid" />
         </div>
       )}
 
-      <div className="border border-[#1a1a8c] rounded-lg">
+      <div className="border border-[#0D0D82] rounded-lg">
         <Card className=" rounded-lg overflow-hidden">
-          <CardHeader className="bg-[#1a1a8c] text-white py-3 px-4 text-center">
+          <CardHeader className="bg-[#0D0D82] text-white py-3 px-4 text-center">
             <Heading size="md">Enter your report information</Heading>
           </CardHeader>
 
@@ -147,7 +175,7 @@ const ReportForm = () => {
                 <div>
                   <label
                     htmlFor="topic"
-                    className="block text-[#1a1a8c] font-medium mb-1"
+                    className="block text-[#0D0D82] font-medium mb-1"
                   >
                     Report Title
                   </label>
@@ -156,7 +184,7 @@ const ReportForm = () => {
                     placeholder="Enter the title of your report"
                     value={topic}
                     onChange={(e) => setTopic(e.target.value)}
-                    className="border-[#1a1a8c] focus:border-[#1a1a8c] focus:ring-[#1a1a8c]"
+                    className="border-[#0D0D82] focus:border-[#0D0D82] focus:ring-[#0D0D82]"
                     required
                   />
                 </div>
@@ -164,7 +192,7 @@ const ReportForm = () => {
                 <div>
                   <label
                     htmlFor="understanding"
-                    className="block text-[#1a1a8c] font-medium mb-1"
+                    className="block text-[#0D0D82] font-medium mb-1"
                   >
                     Personal Understanding of the Topic
                   </label>
@@ -173,7 +201,7 @@ const ReportForm = () => {
                     placeholder="Describe your current understanding of this topic"
                     value={understanding}
                     onChange={(e) => setUnderstanding(e.target.value)}
-                    className="min-h-[150px] border-[#1a1a8c] focus:border-[#1a1a8c] focus:ring-[#1a1a8c]"
+                    className="min-h-[150px] border-[#0D0D82] focus:border-[#0D0D82] focus:ring-[#0D0D82]"
                     required
                   />
                 </div>
@@ -184,11 +212,11 @@ const ReportForm = () => {
                     id="include-images"
                     checked={includeImages}
                     onChange={(e) => setIncludeImages(e.target.checked)}
-                    className="h-4 w-4 rounded border-[#1a1a8c] text-[#1a1a8c] focus:ring-[#1a1a8c]"
+                    className="h-4 w-4 rounded border-[#0D0D82] text-[#0D0D82] focus:ring-[#0D0D82]"
                   />
                   <label
                     htmlFor="include-images"
-                    className="text-[#1a1a8c] font-medium"
+                    className="text-[#0D0D82] font-medium"
                   >
                     Include images in the report
                   </label>
@@ -197,7 +225,7 @@ const ReportForm = () => {
                 <div>
                   <label
                     htmlFor="references"
-                    className="block text-[#1a1a8c] font-medium mb-1"
+                    className="block text-[#0D0D82] font-medium mb-1"
                   >
                     Number of References
                   </label>
@@ -210,14 +238,14 @@ const ReportForm = () => {
                       step="5"
                       value={referenceCount}
                       onChange={handleReferenceChange}
-                      className="border-[#1a1a8c] focus:border-[#1a1a8c] focus:ring-[#1a1a8c]"
+                      className="border-[#0D0D82] focus:border-[#0D0D82] focus:ring-[#0D0D82]"
                     />
                     <Button
                       type="button"
                       variant="outline"
                       colorScheme="blue"
                       onClick={incrementReferences}
-                      className="border-[#1a1a8c] text-[#1a1a8c] hover:bg-[#1a1a8c] hover:text-[#1a1a8c]"
+                      className="border-[#0D0D82] text-[#0D0D82] hover:bg-[#0D0D82] hover:text-[#0D0D82]"
                     >
                       +5
                     </Button>
@@ -226,12 +254,12 @@ const ReportForm = () => {
                       colorScheme="blue"
                       variant="outline"
                       onClick={decrementReferences}
-                      className="border-[#1a1a8c] text-[#1a1a8c] hover:bg-[#1a1a8c] hover:text-[#1a1a8c]"
+                      className="border-[#0D0D82] text-[#0D0D82] hover:bg-[#0D0D82] hover:text-[#0D0D82]"
                     >
                       -5
                     </Button>
                   </div>
-                  <div className="flex items-center justify-between text-sm text-[#1a1a8c] mt-1">
+                  <div className="flex items-center justify-between text-sm text-[#0D0D82] mt-1">
                     <span>Must be a multiple of 5 (max 100)</span>
                     <span>{referenceCount}/100</span>
                   </div>
@@ -246,18 +274,18 @@ const ReportForm = () => {
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-[#1a1a8c] font-medium mb-1">
+                  <label className="block text-[#0D0D82] font-medium mb-1">
                     Guidelines for Report
                   </label>
-                  <div className="border-2 border-dashed border-[#1a1a8c] rounded-lg p-4 bg-white hover:bg-[#1a1a8c]transition-colors">
+                  <div className="border-2 border-dashed border-[#0D0D82] rounded-lg p-4 bg-white hover:bg-[#0D0D82]transition-colors">
                     <Flex alignItems="center" justifyContent="space-between">
                       <Flex alignItems="center">
-                        <FiUpload className="h-5 w-5 text-[#1a1a8c] mr-2" />
+                        <FiUpload className="h-5 w-5 text-[#0D0D82] mr-2" />
                         <Box>
-                          <Text className="text-sm font-medium text-[#1a1a8c]">
+                          <Text className="text-sm font-medium text-[#0D0D82]">
                             Upload guideline documents
                           </Text>
-                          <Text className="text-xs text-[#1a1a8c]">
+                          <Text className="text-xs text-[#0D0D82]">
                             Drag and drop files here or click to browse
                           </Text>
                         </Box>
@@ -275,7 +303,7 @@ const ReportForm = () => {
                         colorScheme="blue"
                         variant="outline"
                         onClick={() => fileInputRef.current?.click()}
-                        className="border-[#1a1a8c] text-[#1a1a8c] hover:bg-[#1a1a8c] hover:text-[#1a1a8c]"
+                        className="border-[#0D0D82] text-[#0D0D82] hover:bg-[#0D0D82] hover:text-[#0D0D82]"
                       >
                         Select Files
                       </Button>
@@ -283,15 +311,15 @@ const ReportForm = () => {
                   </div>
 
                   {files.length > 0 && (
-                    <div className="bg-[#1a1a8c]p-3 rounded-md mt-2 max-h-[150px] overflow-y-auto">
-                      <p className="text-sm font-medium text-[#1a1a8c] mb-1">
+                    <div className="bg-[#0D0D82]p-3 rounded-md mt-2 max-h-[150px] overflow-y-auto">
+                      <p className="text-sm font-medium text-[#0D0D82] mb-1">
                         Selected files:
                       </p>
                       <ul className="space-y-1">
                         {files.map((file, index) => (
                           <li
                             key={index}
-                            className="flex items-center text-sm text-[#1a1a8c]"
+                            className="flex items-center text-sm text-[#0D0D82]"
                           >
                             <FiFileText className="h-4 w-4 mr-2" />
                             {file.name}
@@ -306,7 +334,7 @@ const ReportForm = () => {
                     placeholder="Type additional guidelines or instructions for your report"
                     value={guidelines}
                     onChange={(e) => setGuidelines(e.target.value)}
-                    className="min-h-[150px] mt-2 border-[#1a1a8c] focus:border-[#1a1a8c] focus:ring-[#1a1a8c]"
+                    className="min-h-[150px] mt-2 border-[#0D0D82] focus:border-[#0D0D82] focus:ring-[#0D0D82]"
                   />
                 </div>
 
@@ -315,7 +343,7 @@ const ReportForm = () => {
                     type="submit"
                     isLoading={isSubmitting}
                     loadingText="Submitting..."
-                    className="w-full bg-[#1a1a8c] hover:bg-[#1a1a8c] text-white py-2 rounded-lg"
+                    className="w-full bg-[#0D0D82] hover:bg-[#0D0D82] text-white py-2 rounded-lg"
                   >
                     Submit Report Information
                   </button>

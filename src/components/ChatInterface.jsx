@@ -41,7 +41,7 @@ export default function ChatInterface({ setChatHistory }) {
     setIsProcessing(true)
 
     try {
-      const token = localStorage.getItem("token")
+      const token = localStorage.getItem("seydamtoken")
       if (!token) throw new Error("Please log in to continue")
 
       // Save to chat history

@@ -7,7 +7,7 @@ export default function Header({ onMenuClick, onLogout }) {
   const handleLogout = () => {
     localStorage.removeItem("username");
     localStorage.removeItem("email");
-    localStorage.removeItem("token"); // Remove token or session data
+    localStorage.removeItem("seydamtoken"); // Remove token or session data
     if (onLogout) {
       onLogout(); // Call parent function if provided
     } else {

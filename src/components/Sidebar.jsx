@@ -23,7 +23,7 @@ export default function Sidebar({ isOpen, setIsOpen, chatHistory }) {
         initial={{ x: -300 }}
         animate={{ x: isOpen ? 0 : -300 }}
         transition={{ type: "spring", damping: 20 }}
-        className={`fixed inset-y-0 left-0 w-72 bg-green-700 text-white p-4 z-30
+        className={`fixed inset-y-0 left-0 w-72 bg-green-200 text-white p-4 z-30
           lg:static lg:transform-none ${isOpen ? "" : "lg:translate-x-0"}`}
       >
         {" "}

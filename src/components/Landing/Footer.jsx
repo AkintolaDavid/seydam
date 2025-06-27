@@ -9,21 +9,21 @@ import logo from "../../assets/logo/logoblackbg.png";
 const Footer = () => (
   <footer
     id="footer"
-    className="relative bg-[#000000] text-white py-16 overflow-hidden"
+    className="relative bg-[#000145] text-white py-16 overflow-hidden"
   >
     <div className="relative px-[20px] md:px-[65px] lg:px-[104px] mx-auto max-w-[105rem]">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Logo & Tagline */}
         <div className="">
           <div className="flex items-center mb-2">
-            <img src={logo} alt="Saydem AI Logo" className="" />
+            <img src={logo} alt="Saydem AI Logo" className="h-14" />
             {/* <span className="text-2xl font-bold">Saydem AI</span> */}
           </div>
-          <span>Generate Your Very Own AI assisted Report</span>
+          {/* <span>Generate Your Very Own AI assisted Report</span> */}
           {/* <Link to="/get-started" className="bg-blue-700">
-            <button className="flex items-center gap-2 px-6 py-2 bg-white text-[#1a1a8c] rounded-md hover:bg-green-800 active:bg-green-900 mt-4 transition duration-200">
+            <button className="flex items-center gap-2 px-6 py-2 bg-white text-[#0D0D82] rounded-md hover:bg-green-800 active:bg-green-900 mt-4 transition duration-200">
               Get Started
-              <FiFeather className="text-[#1a1a8c]" />
+              <FiFeather className="text-[#0D0D82]" />
             </button>
           </Link> */}
         </div>
