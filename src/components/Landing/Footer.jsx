@@ -5,12 +5,22 @@ import { FaInstagram, FaLinkedin, FaGithub, FaTwitter } from "react-icons/fa";
 import { FiFeather } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo/logoblackbg.png";
-
+import img from "../../assets/about/img2.jpg";
 const Footer = () => (
   <footer
     id="footer"
-    className="relative bg-[#000145] text-white py-16 overflow-hidden"
+    className="relative bg-[#000145] text-white py-20 overflow-hidden"
   >
+    {" "}
+    <div
+      className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url(${img})`,
+      }}
+    >
+      {/* Very dark overlay to make image barely visible */}
+      <div className="absolute inset-0 bg-[#000145] bg-opacity-80"></div>
+    </div>
     <div className="relative px-[20px] md:px-[65px] lg:px-[104px] mx-auto max-w-[105rem]">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Logo & Tagline */}
@@ -97,7 +107,7 @@ const Footer = () => (
         </div>
       </div>
 
-      <div className="mt-12 border-t border-gray-200 pt-6 text-center text-gray-200 text-sm">
+      <div className="mt-12 sm:mt-24 lg:mt-40 border-t border-gray-200 pt-6 text-center text-gray-200 text-sm">
         Copyright &copy; {new Date().getFullYear()} Saydem. All rights reserved.
       </div>
     </div>

@@ -22,6 +22,11 @@ import ScrollToTop from "./components/scrolltotop/ScrollToTop";
 import ReportStructureEditor from "./pages/ReportStructure";
 import ReportLoadingPage from "./pages/ReportLandingPage";
 import ReportGeneratedPage from "./pages/ReportGeneratedPage";
+import DashboardLayout from "./components/DashboardLayout";
+import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profie";
+import BuyCredits from "./pages/Buycredit";
+import VerifyOTP from "./pages/SignupOtp";
 
 function App() {
   // Initialize sidebar state based on screen size
@@ -67,45 +72,85 @@ function App() {
                 <Route path="/login" element={<Login setToken={setToken} />} />
                 {/* Sign Up Route */}
                 <Route path="/signup" element={<Signup />} />
+                <Route path="/signupotp" element={<VerifyOTP />} />
                 {/* Protected Routes */}
-                <Route
+                {/* <Route
                   path="/dashboard"
                   element={
                     <ProtectedRoute>
                       <ChatInterface setChatHistory={setChatHistory} />
                     </ProtectedRoute>
                   }
-                />
+                /> */}
                 <Route
                   path="/reportform"
                   element={
-                    // <ProtectedRoute>
-                    <ReportForm />
-                    // </ProtectedRoute>
+                    <ProtectedRoute>
+                      <DashboardLayout>
+                        <ReportForm />
+                      </DashboardLayout>
+                    </ProtectedRoute>
                   }
-                />{" "}
+                />
                 <Route
                   path="/report-structure"
                   element={
-                    // <ProtectedRoute>
-                    <ReportStructureEditor />
-                    // </ProtectedRoute>
+                    <ProtectedRoute>
+                      <DashboardLayout>
+                        <ReportStructureEditor />
+                      </DashboardLayout>
+                    </ProtectedRoute>
                   }
                 />
                 <Route
                   path="/report-loading"
                   element={
-                    // <ProtectedRoute>
-                    <ReportLoadingPage />
-                    // </ProtectedRoute>
+                    <ProtectedRoute>
+                      <DashboardLayout>
+                        <ReportLoadingPage />
+                      </DashboardLayout>
+                    </ProtectedRoute>
                   }
                 />
                 <Route
                   path="/report-generated"
                   element={
-                    // <ProtectedRoute>
-                    <ReportGeneratedPage />
-                    // </ProtectedRoute>
+                    <ProtectedRoute>
+                      <DashboardLayout>
+                        <ReportGeneratedPage />
+                      </DashboardLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <DashboardLayout>
+                        <Dashboard />
+                      </DashboardLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute>
+                        <DashboardLayout>
+                        <Profile />
+                      </DashboardLayout>
+                    
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/buy-credit"
+                  element={
+                    <ProtectedRoute>
+                      <DashboardLayout>
+                        <BuyCredits />
+                      </DashboardLayout>
+                    </ProtectedRoute>
                   }
                 />
                 <Route

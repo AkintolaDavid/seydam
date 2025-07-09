@@ -52,7 +52,7 @@ const Home = () => {
             </button>
           </Link>{" "}
           <Link to="/signup">
-            <button className="flex items-center gap-2 px-6 py-2 border-[1px] border-[#0D0D82] text-[#0D0D82] font-normal rounded-md  transition duration-200">
+            <button className="hidden sm:flex items-center gap-2 px-6 py-2 border-[1px] border-[#0D0D82] text-[#0D0D82] font-normal rounded-md  transition duration-200">
               See How It Works
               {/* <FiFeather className="text-white" /> */}
             </button>

@@ -38,10 +38,8 @@ export default function Login({ setToken }) {
         isClosable: true,
         position: "top-right",
       });
-      if (response?.data?.hadUserGenerated === false) {
-        navigate("/reportform");
-      } else {
-        navigate("/generationPage");
+      if (response?.status) {
+        navigate("/dashboard");
       }
     } catch (error) {
       console.log(error);

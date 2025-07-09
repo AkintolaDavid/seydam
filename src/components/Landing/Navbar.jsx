@@ -59,7 +59,7 @@ const Navbar = () => {
             <Link to="/">
               <img
                 src={logo1 || "/placeholder.svg"}
-                className="h-[34px] sm:h-10"
+                className="h-[30px] sm:h-10"
                 alt="Logo"
               />
             </Link>
@@ -87,33 +87,49 @@ const Navbar = () => {
           </nav>
 
           <div className="hidden lg:flex items-center space-x-6">
-            <button
-              onClick={() => {
-                navigate("/login");
-              }}
-              className=" border-[2px] border-[#0D0D82] font-semibold text-[#0D0D82] py-[6px] px-6 rounded-md"
-            >
-              Login
-            </button>
-            <button
-              onClick={() => {
-                navigate("/signup");
-              }}
-              className=" border-[2px] border-[#0D0D82] bg-[#0D0D82] font-medium text-[#ffffff] py-[6px] px-6 rounded-md"
-            >
-              Register
-            </button>
+            {localStorage.getItem("seydamtoken") ? (
+              <button
+                onClick={() => navigate("/dashboard")}
+                className="border-[2px] border-[#0D0D82] font-semibold text-[#ffffff] bg-[#0D0D82] py-[6px] px-6 rounded-md"
+              >
+                Dashboard
+              </button>
+            ) : (
+              <>
+                <button
+                  onClick={() => navigate("/login")}
+                  className="border-[2px] border-[#0D0D82] font-semibold text-[#0D0D82] py-[6px] px-6 rounded-md"
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => navigate("/signup")}
+                  className="border-[2px] border-[#0D0D82] bg-[#0D0D82] font-medium text-white py-[6px] px-6 rounded-md"
+                >
+                  Register
+                </button>
+              </>
+            )}
           </div>
 
           <div className="flex lg:hidden items-center space-x-4">
-            <button
-              onClick={() => {
-                navigate("/login");
-              }}
-              className=" border-[2px] border-[#0D0D82] font-semibold text-[#0D0D82] py-[4px] px-6 rounded-md"
-            >
-              Login
-            </button>
+            {localStorage.getItem("seydamtoken") ? (
+              <button
+                onClick={() => navigate("/dashboard")}
+                className=" border-[2px] border-[#0D0D82] font-semibold text-[#0D0D82] py-[4px] px-2 sm:px-6 rounded-md"
+              >
+                Dashboard
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  navigate("/login");
+                }}
+                className=" border-[2px] border-[#0D0D82] font-semibold text-[#0D0D82] py-[4px] px-6 rounded-md"
+              >
+                Login
+              </button>
+            )}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="text-[#0D0D82]"
@@ -175,26 +191,32 @@ const Navbar = () => {
                       <FaEnvelope className="h-[20px] w-[20px]" />
                       <span className="font-medium">Contact Us</span>
                     </button>
-                    <button
-                      onClick={() => {
-                        setMobileMenuOpen(false);
-                        navigate("/login");
-                      }}
-                      className="w-full flex items-center space-x-3 border-[2px] border-[#0D0D82] text-[#0D0D82] py-2 px-3 rounded-lg hover:bg-opacity-90 transition-colors"
-                    >
-                      <LogIn className="h-[20px] w-[20px]" />
-                      <span className="font-medium">Login</span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        setMobileMenuOpen(false);
-                        navigate("/signup");
-                      }}
-                      className="w-full flex items-center space-x-3 border-[2px] border-[#0D0D82] text-[#0D0D82] py-2 px-3 rounded-lg hover:bg-opacity-90 transition-colors"
-                    >
-                      <UserPlus className="h-[20px] w-[20px]" />
-                      <span className="font-medium">Register</span>
-                    </button>
+                    {localStorage.getItem("seydamtoken") ? (
+                      <></>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() => {
+                            setMobileMenuOpen(false);
+                            navigate("/login");
+                          }}
+                          className="w-full flex items-center space-x-3 border-[2px] border-[#0D0D82] text-[#0D0D82] py-2 px-3 rounded-lg hover:bg-opacity-90 transition-colors"
+                        >
+                          <LogIn className="h-[20px] w-[20px]" />
+                          <span className="font-medium">Login</span>
+                        </button>
+                        <button
+                          onClick={() => {
+                            setMobileMenuOpen(false);
+                            navigate("/signup");
+                          }}
+                          className="w-full flex items-center space-x-3 border-[2px] border-[#0D0D82] text-[#0D0D82] py-2 px-3 rounded-lg hover:bg-opacity-90 transition-colors"
+                        >
+                          <UserPlus className="h-[20px] w-[20px]" />
+                          <span className="font-medium">Register</span>
+                        </button>
+                      </>
+                    )}
                   </div>
                 </nav>
 

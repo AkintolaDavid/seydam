@@ -34,19 +34,24 @@ export default function Signup() {
             "Content-Type": "application/json",
           },
         }
-      );
-
-      // ✅ Show success toast from backend message
-      toast({
-        title: "Success",
-        description: response.data.message || "Account created successfully.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-        position: "top-right",
-      });
-
-      navigate("signin");
+      ); 
+      if (response.status === 200) {
+        toast({
+          title: "OTP successfully sent to your mail",
+          status: "success",
+          duration: 2000, // Toast visible for 2 seconds
+          isClosable: true,
+          position: "top-right",
+        });
+      
+        localStorage.setItem("signupemail", email);
+      
+        // Wait 2 seconds before navigating
+        setTimeout(() => {
+          navigate("/signupotp");
+        }, 2000);
+      }
+      
     } catch (error) {
       const errorMsg = error.response?.data?.error || "Error signing up";
       // ✅ Show error toast from backend message
