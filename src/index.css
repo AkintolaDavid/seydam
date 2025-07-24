@@ -1,6 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  font-family: "Montserrat", sans-serif;
+}
 /* Hide Chrome/Edge default password reveal icon */
 input::-ms-reveal,
 input::-ms-clear {
@@ -9,4 +13,880 @@ input::-ms-clear {
 
 input[type="password"]::-webkit-credentials-auto-fill-button {
   display: none !important;
+}
+@import 'cropperjs/dist/cropper.css';
+
+/* Custom styles for the editor */
+[contenteditable]:empty:before {
+  content: attr(data-placeholder);
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* Fix font inheritance issues - ensure lists maintain their own styling */
+.editor-content {
+  font-size: 12px !important;
+  font-family: Arial, sans-serif !important;
+  color: #000000 !important;
+  /* Ensure content respects page boundaries */
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+  hyphens: auto !important;
+  /* Force content to stay within boundaries */
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.editor-content * {
+  /* Prevent font inheritance from affecting unrelated elements */
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+  /* Ensure all content respects boundaries */
+  max-width: 100% !important;
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+  box-sizing: border-box !important;
+}
+
+/* Explicit list styling to prevent inheritance issues */
+.editor-content ul,
+.editor-content ol {
+  font-size: 12px !important;
+  font-family: Arial, sans-serif !important;
+  color: #000000 !important;
+  max-width: 100% !important;
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+}
+
+.editor-content li {
+  font-size: inherit !important;
+  font-family: inherit !important;
+  color: inherit !important;
+  max-width: 100% !important;
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+}
+
+/* Ensure headings respect page boundaries */
+.editor-content h1,
+.editor-content h2,
+.editor-content h3,
+.editor-content h4,
+.editor-content h5,
+.editor-content h6 {
+  max-width: 100% !important;
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+  hyphens: auto !important;
+  /* Prevent headings from breaking across pages */
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+  /* Ensure proper spacing */
+  margin: 1em 0 !important;
+  /* Isolate heading styles */
+  display: block !important;
+  /* Force text wrapping */
+  white-space: normal !important;
+  word-break: break-word !important;
+}
+
+/* Ensure paragraphs respect boundaries */
+.editor-content p,
+.editor-content div {
+  max-width: 100% !important;
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+  hyphens: auto !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+}
+
+/* List styles */
+[contenteditable] ul {
+  list-style-type: disc;
+  margin: 0;
+  padding-left: 30px;
+}
+
+[contenteditable] ol {
+  list-style-type: decimal;
+  margin: 0;
+  padding-left: 30px;
+}
+
+[contenteditable] li {
+  margin-bottom: 5px;
+  line-height: inherit;
+  padding-left: 5px;
+  /* Ensure list items respect boundaries */
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+  max-width: 100% !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+}
+
+/* Nested list styles */
+[contenteditable] ul ul {
+  list-style-type: circle;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+[contenteditable] ul ul ul {
+  list-style-type: square;
+}
+
+[contenteditable] ol ol {
+  list-style-type: lower-alpha;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+[contenteditable] ol ol ol {
+  list-style-type: lower-roman;
+}
+
+/* Custom bullet styles */
+[contenteditable] ul[style*="list-style-type: circle"] {
+  list-style-type: circle;
+}
+
+[contenteditable] ul[style*="list-style-type: square"] {
+  list-style-type: square;
+}
+
+[contenteditable] ul[style*="list-style-type: none"] li {
+  list-style-type: none;
+}
+
+/* Custom number styles */
+[contenteditable] ol[style*="list-style-type: lower-alpha"] {
+  list-style-type: lower-alpha;
+}
+
+[contenteditable] ol[style*="list-style-type: upper-alpha"] {
+  list-style-type: upper-alpha;
+}
+
+[contenteditable] ol[style*="list-style-type: lower-roman"] {
+  list-style-type: lower-roman;
+}
+
+[contenteditable] ol[style*="list-style-type: upper-roman"] {
+  list-style-type: upper-roman;
+}
+
+/* Page break styles */
+.page-break,
+.page-break-auto {
+  page-break-before: always;
+  break-before: page;
+  /* Ensure page breaks are visible but don't interfere with content */
+  position: relative;
+  z-index: 1;
+}
+
+/* Prevent page breaks inside certain elements */
+.editor-content h1,
+.editor-content h2,
+.editor-content h3,
+.editor-content h4,
+.editor-content h5,
+.editor-content h6 {
+  page-break-after: avoid;
+  break-after: avoid;
+}
+
+.editor-content ul,
+.editor-content ol {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.editor-content li {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* Page separators with clear gaps */
+.page-separator {
+  height: 20px;
+  background: #f3f4f6;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 5;
+}
+
+.page-separator::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 1px;
+  background: #d1d5db;
+}
+
+/* Advanced Image Container Styles */
+.advanced-image-container {
+  position: relative;
+  display: block;
+  margin: 15px 0;
+  max-width: 100%;
+  user-select: none;
+  /* Ensure images respect page boundaries */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.advanced-image-container .image-wrapper {
+  display: inline-block;
+  position: relative;
+  max-width: 100%;
+}
+
+.advanced-image-container img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  cursor: move;
+}
+
+.advanced-image-container:hover img {
+  border-color: #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.advanced-image-container.selected img {
+  border-color: #1a1a8c;
+  box-shadow: 0 0 0 2px rgba(26, 26, 140, 0.2);
+}
+
+/* Image Caption Styles */
+.advanced-image-container .image-caption {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+  line-height: 1.4;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  /* Ensure captions respect boundaries */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  max-width: 100%;
+}
+
+.advanced-image-container .image-caption:hover {
+  background-color: #f5f5f5;
+}
+
+/* Dragging States */
+.advanced-image-container.dragging {
+  opacity: 0.7;
+  transform: rotate(2deg);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.advanced-image-container.drag-preview {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1001;
+  transform: rotate(2deg);
+  opacity: 0.8;
+}
+
+/* Resize handles */
+.resize-handle {
+  position: absolute;
+  background: #1a1a8c;
+  border: 1px solid white;
+  width: 8px;
+  height: 8px;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.advanced-image-container:hover .resize-handle,
+.advanced-image-container.selected .resize-handle {
+  opacity: 1;
+}
+
+.resize-handle.nw { top: -4px; left: -4px; cursor: nw-resize; }
+.resize-handle.ne { top: -4px; right: -4px; cursor: ne-resize; }
+.resize-handle.sw { bottom: -4px; left: -4px; cursor: sw-resize; }
+.resize-handle.se { bottom: -4px; right: -4px; cursor: se-resize; }
+.resize-handle.n { top: -4px; left: 50%; transform: translateX(-50%); cursor: n-resize; }
+.resize-handle.s { bottom: -4px; left: 50%; transform: translateX(-50%); cursor: s-resize; }
+.resize-handle.w { top: 50%; left: -4px; transform: translateY(-50%); cursor: w-resize; }
+.resize-handle.e { top: 50%; right: -4px; transform: translateY(-50%); cursor: e-resize; }
+
+/* Image Alignment Styles */
+.advanced-image-container[data-alignment="center"] {
+  text-align: center;
+}
+
+.advanced-image-container[data-alignment="right"] {
+  text-align: right;
+}
+
+.advanced-image-container[data-alignment="left"] {
+  text-align: left;
+}
+
+/* Section Container Styles */
+.section-container {
+  position: relative;
+  margin: 20px 0;
+  transition: all 0.2s ease;
+  /* Ensure sections respect boundaries */
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.section-container:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section-container[contenteditable="true"]:focus {
+  outline: 2px solid #1a1a8c;
+  outline-offset: 2px;
+}
+
+/* Enhanced Table Container Styles */
+.table-container {
+  margin: 20px 0;
+  overflow-x: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  page-break-inside: avoid;
+  break-inside: avoid;
+  /* Ensure tables respect boundaries */
+  max-width: 100%;
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  table-layout: fixed;
+  /* Ensure table content respects boundaries */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.table-container th,
+.table-container td {
+  border: 1px solid #e5e7eb;
+  padding: 12px 8px;
+  text-align: left;
+  vertical-align: top;
+  min-width: 100px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  position: relative;
+  /* Ensure cell content doesn't overflow */
+  max-width: 0;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.table-container th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  color: #374151;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.table-container td {
+  color: #374151;
+  min-height: 20px;
+}
+
+.table-container tr:nth-child(even) td {
+  background-color: #f9fafb;
+}
+
+.table-container tr:hover td {
+  background-color: #f3f4f6;
+}
+
+.table-container th:focus,
+.table-container td:focus {
+  outline: 2px solid #1a1a8c;
+  outline-offset: -2px;
+  background-color: #dbeafe !important;
+  z-index: 10;
+}
+
+/* Table cell editing states */
+.table-container th:focus:empty::before,
+.table-container td:focus:empty::before {
+  content: 'Type here...';
+  color: #9ca3af;
+  font-style: italic;
+  pointer-events: none;
+}
+
+/* Ensure proper spacing and prevent text merging */
+.table-container th,
+.table-container td {
+  box-sizing: border-box;
+  white-space: pre-wrap;
+  line-height: 1.4;
+}
+
+/* Table navigation indicators */
+.table-container th:focus::after,
+.table-container td:focus::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 6px;
+  height: 6px;
+  background: #1a1a8c;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Heading Selection Styles */
+.selected-heading {
+  background: linear-gradient(135deg, rgba(26, 26, 140, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%) !important;
+  border-left: 4px solid #1a1a8c !important;
+  padding-left: 12px !important;
+  margin-left: -16px !important;
+  border-radius: 0 8px 8px 0 !important;
+  box-shadow: 0 2px 8px rgba(26, 26, 140, 0.15) !important;
+  transition: all 0.3s ease !important;
+  position: relative !important;
+}
+
+.selected-heading::before {
+  content: '✨ AI Editing';
+  position: absolute;
+  top: -8px;
+  right: 8px;
+  background: linear-gradient(135deg, #1a1a8c 0%, #9333ea 100%);
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 12px;
+  z-index: 10;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Heading hover effects in navigation */
+.heading-nav-item:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(147, 51, 234, 0.05) 100%);
+  border-left: 3px solid #3b82f6;
+  transform: translateX(2px);
+  transition: all 0.2s ease;
+}
+
+/* AI Panel Animations */
+.ai-panel-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.ai-panel-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 0.3s ease-out;
+}
+
+.ai-panel-exit {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.ai-panel-exit-active {
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.3s ease-in;
+}
+
+/* Print styles for page breaks */
+@media print {
+  .page-break,
+  .page-break-auto {
+    page-break-before: always;
+  }
+  
+  .editor-content {
+    font-size: 12pt !important;
+  }
+
+  .advanced-image-container {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .section-container {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .table-container {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    border: 1px solid #000;
+  }
+
+  .table-container th,
+  .table-container td {
+    border: 1px solid #000;
+    padding: 8px 6px;
+    font-size: 10pt;
+  }
+
+  .table-container th {
+    background-color: #f0f0f0 !important;
+    font-weight: bold;
+  }
+
+  .resize-handle {
+    display: none !important;
+  }
+
+  /* Hide AI-related elements in print */
+  .selected-heading::before {
+    display: none !important;
+  }
+
+  .selected-heading {
+    background: none !important;
+    border-left: none !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Smooth transitions for dynamic content */
+.editor-content {
+  transition: none; /* Disable transitions to prevent flickering during auto page breaks */
+}
+
+/* Prevent style bleeding between elements */
+.editor-content > * {
+  isolation: isolate;
+}
+
+/* Text selection formatting styles */
+.editor-content span[style*="font-size"] {
+  display: inline;
+}
+
+.editor-content span[style*="font-family"] {
+  display: inline;
+}
+
+.editor-content span[style*="line-height"] {
+  display: inline;
+}
+
+/* Ensure inline formatting doesn't break layout */
+.editor-content span {
+  display: inline;
+  /* Ensure spans respect boundaries */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  max-width: 100%;
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* Cropper.js custom styles */
+.cropper-container {
+  direction: ltr;
+  font-size: 0;
+  line-height: 0;
+  position: relative;
+  -ms-touch-action: none;
+  touch-action: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.cropper-container img {
+  display: block;
+  height: 100%;
+  image-orientation: 0deg;
+  max-height: none;
+  max-width: none;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+}
+
+/* Image drag and drop styles */
+.editor-content.drag-over {
+  background-color: rgba(26, 26, 140, 0.1);
+  border: 2px dashed #1a1a8c;
+}
+
+/* Context menu styles */
+.image-context-menu {
+  position: fixed;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 180px;
+  padding: 4px 0;
+}
+
+.image-context-menu button {
+  width: 100%;
+  padding: 8px 12px;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #374151;
+  transition: background-color 0.15s ease;
+}
+
+.image-context-menu button:hover {
+  background-color: #f3f4f6;
+}
+
+.image-context-menu button.danger {
+  color: #dc2626;
+}
+
+.image-context-menu button.danger:hover {
+  background-color: #fef2f2;
+}
+
+.image-context-menu .separator {
+  height: 1px;
+  background-color: #e5e7eb;
+  margin: 4px 0;
+}
+
+/* Floating toolbar styles */
+.image-floating-toolbar {
+  position: absolute;
+  top: -48px;
+  left: 0;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  z-index: 20;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.advanced-image-container:hover .image-floating-toolbar,
+.advanced-image-container.selected .image-floating-toolbar {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.image-floating-toolbar button {
+  padding: 6px;
+  border: none;
+  background: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease;
+  color: #6b7280;
+}
+
+.image-floating-toolbar button:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.image-floating-toolbar button.active {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.image-floating-toolbar button.danger {
+  color: #dc2626;
+}
+
+.image-floating-toolbar button.danger:hover {
+  background-color: #fef2f2;
+}
+
+.image-floating-toolbar .separator {
+  width: 1px;
+  height: 16px;
+  background-color: #e5e7eb;
+  margin: 0 2px;
+}
+
+/* Auto-scroll indicators */
+.auto-scroll-indicator {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(26, 26, 140, 0.9);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  z-index: 1002;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.auto-scroll-indicator.visible {
+  opacity: 1;
+}
+
+.auto-scroll-indicator.top {
+  top: 20px;
+}
+
+.auto-scroll-indicator.bottom {
+  bottom: 20px;
+}
+
+/* Selection outline for images */
+.advanced-image-container.selected::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid #1a1a8c;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Image loading states */
+.advanced-image-container img[src=""] {
+  background: #f3f4f6;
+  border: 2px dashed #d1d5db;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.advanced-image-container img[src=""]:before {
+  content: "Loading...";
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+/* Force content to respect page boundaries - CRITICAL FIXES */
+.editor-content {
+  /* Prevent horizontal overflow */
+  overflow-x: hidden !important;
+  /* Ensure content wraps properly */
+  white-space: normal !important;
+  /* Force text wrapping */
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+  hyphens: auto !important;
+}
+
+/* Ensure all text content respects boundaries */
+.editor-content *:not(img):not(table):not(tr):not(td):not(th) {
+  /* Force text wrapping */
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+  word-break: break-word !important;
+  hyphens: auto !important;
+  /* Prevent content from overflowing horizontally */
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Special handling for long words and URLs */
+.editor-content {
+  /* Break long words if necessary */
+  word-break: break-word !important;
+  /* Allow hyphenation */
+  hyphens: auto !important;
+  /* Prevent content from overflowing horizontally */
+  overflow-wrap: break-word !important;
+}
+
+/* Responsive image handling */
+@media (max-width: 768px) {
+  .advanced-image-container {
+    margin: 10px 0;
+  }
+  
+  .image-floating-toolbar {
+    top: -40px;
+    padding: 2px;
+  }
+  
+  .image-floating-toolbar button {
+    padding: 4px;
+  }
+  
+  .resize-handle {
+    width: 12px;
+    height: 12px;
+  }
+
+  .table-container {
+    font-size: 11px;
+  }
+
+  .table-container th,
+  .table-container td {
+    padding: 8px 6px;
+    min-width: 80px;
+  }
 }

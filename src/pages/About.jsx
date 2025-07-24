@@ -6,6 +6,12 @@ import img1 from "../assets/about/img1.jpg";
 import Navbar from "../components/Landing/Navbar";
 import Footer from "../components/Landing/Footer";
 import oye from "../assets/team/oye.jpg";
+import adg from "../assets/team/adg.jpg";
+import dav from "../assets/team/akintola.png";
+import bon from "../assets/team/bonike.png";
+import deo from "../assets/team/deo.png";
+import trabs from "../assets/team/trabs.png";
+import samo from "../assets/team/samo.png";
 import { TbSpeakerphone } from "react-icons/tb";
 import { MdOutlineSearch } from "react-icons/md";
 import {
@@ -127,33 +133,49 @@ const About = () => {
           <h2 className="text-3xl md:text-4xl text-gray-900 font-semibold mb-4 sm:mb-8">
             Our Team
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
               <img
                 src={oye}
-                alt="David Park"
-                className="w-[70px] h-[70px] sm:w-20 sm:h-20 rounded-full object-cover"
+                alt="Oyewole Temi"
+                className="w-[70px] h-[70px] sm:w-24 sm:h-24 object-cover rounded-full"
               />
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">
-                  Oyewole Temi
+                  Oyewole Temiloluwa
                 </h3>
                 <p className="text-sm text-gray-600 font-normal">
                   CEO / Backend Developer
                 </p>{" "}
                 <span className="flex gap-2 mt-2">
-                  <FaInstagram className=" text-xl" />{" "}
-                  <FaLinkedin className=" text-xl" />
-                  <FaGithub className=" text-xl" />
+                  <div className="flex items-center gap-3 text-gray-800">
+                    <a
+                      href="https://www.instagram.com/_oyeofficial/?utm_source=ig_web_button_share_sheet"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Instagram"
+                    >
+                      <FaInstagram className="text-xl  transition" />
+                    </a>
+
+                    <a
+                      href="https://www.linkedin.com/in/temiloluwa-oyewole-217349248?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3Bo5ILBdmHRaKw1%2BbS4ChPaw%3D%3D"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LinkedIn"
+                    >
+                      <FaLinkedin className="text-xl  transition" />
+                    </a>
+                  </div>
                 </span>{" "}
               </div>
             </div>
 
             <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
               <img
-                src={oye}
-                alt="David Park"
-                className="w-[70px] h-[70px] sm:w-20 sm:h-20 rounded-full object-cover"
+                src={dav}
+                alt="Akintola David "
+                className="w-[70px] h-[70px] sm:w-24 sm:h-24 object-cover rounded-full"
               />
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">
@@ -163,17 +185,42 @@ const About = () => {
                   Frontend Developer
                 </p>{" "}
                 <span className="flex gap-2 mt-2">
-                  <FaInstagram className=" text-xl" />{" "}
-                  <FaLinkedin className=" text-xl" />
-                  <FaGithub className=" text-xl" />
+                  <div className="flex items-center gap-3 text-gray-800">
+                    <a
+                      href="https://www.instagram.com/caster__david/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Instagram"
+                    >
+                      <FaInstagram className="text-xl  transition" />
+                    </a>
+
+                    <a
+                      href="https://www.linkedin.com/in/akintola-david-70553b233/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LinkedIn"
+                    >
+                      <FaLinkedin className="text-xl  transition" />
+                    </a>
+
+                    {/* <a
+    href="https://github.com/AkintolaDavid"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="GitHub"
+  >
+    <FaGithub className="text-xl hover:text-black transition" />
+  </a> */}
+                  </div>
                 </span>{" "}
               </div>
             </div>
             <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
               <img
-                src={oye}
-                alt="David Park"
-                className="w-[70px] h-[70px] sm:w-20 sm:h-20 rounded-full object-cover"
+                src={adg}
+                alt="Tomiwa Adeaga"
+                className="w-[70px] h-[70px] sm:w-24 sm:h-24 object-cover rounded-full"
               />
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">
@@ -181,38 +228,33 @@ const About = () => {
                 </h3>
                 <p className="text-sm text-gray-600 font-normal">AI Engineer</p>{" "}
                 <span className="flex gap-2 mt-2">
-                  <FaInstagram className=" text-xl" />{" "}
-                  <FaLinkedin className=" text-xl" />
-                  <FaGithub className=" text-xl" />
-                </span>{" "}
-              </div>
-            </div>
-            <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
-              <img
-                src={oye}
-                alt="David Park"
-                className="w-[70px] h-[70px] sm:w-20 sm:h-20 rounded-full object-cover"
-              />
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Ogundinrun AyooluwaTomiwa
-                </h3>
-                <p className="mt-1 text-sm text-gray-600 font-normal">
-                  Finance Manager
-                </p>
-                <span className="flex gap-2 mt-2">
-                  <FaInstagram className=" text-xl" />{" "}
-                  <FaLinkedin className=" text-xl" />
-                  <FaGithub className=" text-xl" />
-                </span>{" "}
-              </div>
-            </div>
+                  <div className="flex items-center gap-3 text-gray-800">
+                    <a
+                      href="https://www.instagram.com/tomiwa_adeaga/?utm_source=ig_web_button_share_sheet"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Instagram"
+                    >
+                      <FaInstagram className="text-xl  transition" />
+                    </a>
 
+                    <a
+                      href="https://www.linkedin.com/in/tomiwa-adeaga?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B%2FRiGpzz%2FRkSuMTLtNPXHFw%3D%3D"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LinkedIn"
+                    >
+                      <FaLinkedin className="text-xl  transition" />
+                    </a>
+                  </div>
+                </span>{" "}
+              </div>
+            </div>
             <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
               <img
-                src={oye}
-                alt="David Park"
-                className="w-[70px] h-[70px] sm:w-20 sm:h-20 rounded-full object-cover"
+                src={trabs}
+                alt="Igbaroola Samuel"
+                className="w-[70px] h-[70px] sm:w-24 sm:h-24 object-cover rounded-full"
               />
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">
@@ -222,18 +264,73 @@ const About = () => {
                   Frontend Developer
                 </p>{" "}
                 <span className="flex gap-2 mt-2">
-                  <FaInstagram className=" text-xl" />{" "}
-                  <FaLinkedin className=" text-xl" />
-                  <FaGithub className=" text-xl" />
+                  <div className="flex items-center gap-3 text-gray-800">
+                    <a
+                      href="https://www.linkedin.com/in/samuel-igbaroola-755a64219?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BTLFv467VQzmC1fd0HdbYSA%3D%3D"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Instagram"
+                    >
+                      <FaInstagram className="text-xl  transition" />
+                    </a>
+
+                    <a
+                      href="https://www.instagram.com/sam_igbaroola?igsh=MXc5am5obDN5Nm5oMw=="
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LinkedIn"
+                    >
+                      <FaLinkedin className="text-xl  transition" />
+                    </a>
+                  </div>
+                </span>{" "}
+              </div>
+            </div>
+            <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
+              <img
+                src={bon}
+                alt="Ogundinrun AyooluwaTomiwa"
+                className="w-[70px] h-[70px] sm:w-24 sm:h-24 object-cover rounded-full"
+              />
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Ogundinrun
+                </h3>{" "}
+                <h3 className="text-lg font-semibold text-gray-900">
+                  AyooluwaTomiwa
+                </h3>
+                <p className="mt-1 text-sm text-gray-600 font-normal">
+                  Finance Manager
+                </p>
+                <span className="flex gap-2 mt-2">
+                  <div className="flex items-center gap-3 text-gray-800">
+                    <a
+                      href="https://www.instagram.com/ayooluwatomiwa._?igsh=MWxoaDRnYnpqbjI2aA%3D%3D&utm_source=qr"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Instagram"
+                    >
+                      <FaInstagram className="text-xl  transition" />
+                    </a>
+
+                    <a
+                      href="https://www.linkedin.com/in/ayooluwatomiwaogundiran?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LinkedIn"
+                    >
+                      <FaLinkedin className="text-xl  transition" />
+                    </a>
+                  </div>
                 </span>{" "}
               </div>
             </div>
 
             <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
               <img
-                src={oye}
-                alt="David Park"
-                className="w-[70px] h-[70px] sm:w-20 sm:h-20 rounded-full object-cover"
+                src={samo}
+                alt="Bolaji Samo"
+                className="w-[70px] h-[70px] sm:w-24 sm:h-24 object-cover rounded-full"
               />
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">
@@ -243,18 +340,34 @@ const About = () => {
                   Policy And Strategy
                 </p>{" "}
                 <span className="flex gap-2 mt-2">
-                  <FaInstagram className=" text-xl" />{" "}
-                  <FaLinkedin className=" text-xl" />
-                  <FaGithub className=" text-xl" />
+                  <div className="flex items-center gap-3 text-gray-800">
+                    <a
+                      href="https://www.instagram.com/samo.o_/?utm_source=ig_web_button_share_sheet"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Instagram"
+                    >
+                      <FaInstagram className="text-xl  transition" />
+                    </a>
+
+                    <a
+                      href="https://www.linkedin.com/in/bolaji-samo-1219a9234?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BKS6AXHWxQ%2FCsuSPVqi41bA%3D%3D"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LinkedIn"
+                    >
+                      <FaLinkedin className="text-xl  transition" />
+                    </a>
+                  </div>
                 </span>{" "}
               </div>
             </div>
 
             <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
               <img
-                src={oye}
-                alt="David Park"
-                className="w-[70px] h-[70px] sm:w-20 sm:h-20 rounded-full object-cover"
+                src={deo}
+                alt=" Olaoye Daniel"
+                className="w-[70px] h-[70px] sm:w-24 sm:h-24 object-cover rounded-full"
               />
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">
@@ -264,51 +377,25 @@ const About = () => {
                   Finance Manager
                 </p>{" "}
                 <span className="flex gap-2 mt-2">
-                  <FaInstagram className=" text-xl" />{" "}
-                  <FaLinkedin className=" text-xl" />
-                  <FaGithub className=" text-xl" />
-                </span>{" "}
-              </div>
-            </div>
+                  <div className="flex items-center gap-3 text-gray-800">
+                    <a
+                      href="https://www.instagram.com/deothe1st/?utm_source=ig_web_button_share_sheet"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Instagram"
+                    >
+                      <FaInstagram className="text-xl  transition" />
+                    </a>
 
-            <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
-              <img
-                src={oye}
-                alt="David Park"
-                className="w-[70px] h-[70px] sm:w-20 sm:h-20 rounded-full object-cover"
-              />
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Titilayo Olusola
-                </h3>
-                <p className="text-sm text-gray-600 font-normal">
-                  Media And Marketing
-                </p>{" "}
-                <span className="flex gap-2 mt-2">
-                  <FaInstagram className=" text-xl" />{" "}
-                  <FaLinkedin className=" text-xl" />
-                  <FaGithub className=" text-xl" />
-                </span>{" "}
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4 p-4 bg-white shadow rounded-lg">
-              <img
-                src={oye}
-                alt="David Park"
-                className="w-[70px] h-[70px] sm:w-20 sm:h-20 rounded-full object-cover"
-              />
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Adeleke Konge
-                </h3>
-                <p className="text-sm text-gray-600 font-normal">
-                  Media And Marketing
-                </p>{" "}
-                <span className="flex gap-2 mt-2">
-                  <FaInstagram className=" text-xl" />{" "}
-                  <FaLinkedin className=" text-xl" />
-                  <FaGithub className=" text-xl" />
+                    <a
+                      href="https://www.linkedin.com/in/daniel-olaoye-143028268?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BSynw46DUR5SzZxM2V%2FOQTA%3D%3D"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LinkedIn"
+                    >
+                      <FaLinkedin className="text-xl  transition" />
+                    </a>
+                  </div>
                 </span>{" "}
               </div>
             </div>

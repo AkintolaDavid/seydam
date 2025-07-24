@@ -11,7 +11,7 @@ const Pricing = () => {
 
       <div className="relative px-[20px] md:px-[65px] lg:px-[104px] mx-auto max-w-[105rem] text-center">
         {/* Section Header */}
-        <h2 className="text-4xl font-bold text-white lg:mt-3">Pricing Plans</h2>
+        <h2 className="text-[34px] sm:text-[42px] font-bold text-white lg:mt-3">Pricing Plans</h2>
 
         {/* Pricing Cards */}
         <div className="mt-10 sm:mt-16 grid gap-8 grid-cols-1 md:grid-cols-3">

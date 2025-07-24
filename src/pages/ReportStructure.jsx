@@ -1,5 +1,6 @@
 "use client";
 
+import { useToast } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import {
   FaPlus,
@@ -10,12 +11,10 @@ import {
   FaChevronDown,
   FaChevronRight,
   FaFileAlt,
-  FaCog,
-  FaEye,
   FaSave,
-  FaUndo,
   FaGripVertical,
   FaSpinner,
+  FaInfoCircle,
 } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -23,23 +22,39 @@ const ReportStructureEditor = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  // const structureData = location.state?.structureData;
-  // const topic = location.state?.topic || "";
-  // const description = location.state?.description || "";
 
   const structureData = location.state?.structureData;
-  const topic =
-    "DESIGN AND IMPLEMENTATION OF SMALL SCALE ENTERPRISE MANAGEMENT system";
-  const description =
-    "DESIGN AND IMPLEMENTATION OF SMALL SCALE ENTERPRISE MANAGEMENT system";
+  const topic = location.state?.topic || "";
+  const description = location.state?.description || "";
+  const report_id = location.state?.report_id || "";
 
+  const username = localStorage.getItem("username") || "User";
+  const capitalizedUsername = username
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
+  const capitalizedTopic = topic
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
+  console.log("Report ID:", report_id);
+  console.log("Initial structure data:", structureData);
+
+  // Fixed transformBackendData function
   const transformBackendData = (backendData) => {
-    if (!backendData || !backendData.data) return {};
+    console.log("Transforming backend data:", backendData);
+
+    if (!backendData) return {};
+
+    const dataToTransform = backendData.data || backendData;
+
+    if (typeof dataToTransform !== "object") return {};
 
     const transformed = {};
 
-    Object.entries(backendData.data).forEach(([chapterKey, chapterContent]) => {
-      // Convert chapter key to readable format
+    Object.entries(dataToTransform).forEach(([chapterKey, chapterContent]) => {
       const chapterTitle = chapterKey
         .replace(/_/g, " ")
         .replace(/chapter (\d+)/, "Chapter $1 -")
@@ -50,12 +65,16 @@ const ReportStructureEditor = () => {
       transformed[chapterTitle] = chapterContent;
     });
 
+    console.log("Transformed data:", transformed);
     return transformed;
   };
 
   const [structure, setStructure] = useState(() => {
+    console.log("Initializing structure with:", structureData);
     if (structureData) {
-      return transformBackendData(structureData);
+      const transformed = transformBackendData(structureData);
+      console.log("Initial transformed structure:", transformed);
+      return transformed;
     }
     return {};
   });
@@ -64,18 +83,46 @@ const ReportStructureEditor = () => {
   const [editingItem, setEditingItem] = useState(null);
   const [editValue, setEditValue] = useState("");
   const [originalStructure, setOriginalStructure] = useState(structure);
-  const [draggedItem, setDraggedItem] = useState(null);
-  const [dragOverItem, setDragOverItem] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
+  const toast = useToast();
 
   // Update structure when structureData changes
   useEffect(() => {
+    console.log("useEffect triggered with structureData:", structureData);
     if (structureData) {
       const transformed = transformBackendData(structureData);
+      console.log("Setting structure to:", transformed);
       setStructure(transformed);
       setOriginalStructure(transformed);
     }
   }, [structureData]);
+
+  // Debug effect to log structure changes
+  useEffect(() => {
+    console.log("Structure state updated:", structure);
+    console.log("Structure keys:", Object.keys(structure));
+  }, [structure]);
+
+  // Helper function to extract chapter number for sorting
+  const getChapterNumber = (key) => {
+    const match = key.match(/Chapter (\d+)/);
+    return match ? Number.parseInt(match[1]) : 999; // Put non-numbered items at the end
+  };
+
+  // Helper function to extract subsection number for sorting
+  const getSubsectionNumber = (key) => {
+    const match = key.match(/^(\d+)\.(\d+)/);
+    if (match) {
+      return Number.parseInt(match[1]) * 1000 + Number.parseInt(match[2]); // For sorting like 1.1, 1.2, 2.1, etc.
+    }
+    // Also handle simple numeric keys like "1", "2", "3"
+    const numMatch = key.match(/^(\d+)$/);
+    if (numMatch) {
+      return Number.parseInt(numMatch[1]);
+    }
+    return 999;
+  };
 
   const toggleSection = (path) => {
     setExpandedSections((prev) => ({
@@ -84,14 +131,36 @@ const ReportStructureEditor = () => {
     }));
   };
 
-  const startEditing = (path, currentValue) => {
+  const startEditing = (path, currentValue, isValueEdit = false) => {
+    console.log(
+      "Starting edit for path:",
+      path,
+      "with value:",
+      currentValue,
+      "isValueEdit:",
+      isValueEdit
+    );
     setEditingItem(path);
     setEditValue(currentValue || "");
   };
 
   const saveEdit = () => {
+    toast({
+      title: "Report Changes Saved!",
+      status: "success",
+      duration: 1000, // 1 second
+      isClosable: true,
+      position: "top-right",
+    });
     if (editingItem && editValue.trim()) {
-      updateStructure(editingItem, editValue.trim());
+      console.log(
+        "Saving edit for path:",
+        editingItem,
+        "with new value:",
+        editValue.trim()
+      );
+      updateStructureWithNewPath(editingItem, editValue.trim());
+      setHasChanges(true);
     }
     setEditingItem(null);
     setEditValue("");
@@ -102,92 +171,220 @@ const ReportStructureEditor = () => {
     setEditValue("");
   };
 
-  const updateStructure = (path, value) => {
-    const pathArray = path.split(".");
-    const newStructure = JSON.parse(JSON.stringify(structure));
+  // Helper function to safely navigate to a path in the structure
+  const navigateToPath = (structure, pathArray) => {
+    let current = structure;
+    const validPath = [];
 
-    let current = newStructure;
-    for (let i = 0; i < pathArray.length - 1; i++) {
-      current = current[pathArray[i]];
+    for (const key of pathArray) {
+      console.log(
+        "Navigating to key:",
+        key,
+        "Current keys:",
+        Object.keys(current)
+      );
+
+      if (
+        current &&
+        typeof current === "object" &&
+        current[key] !== undefined
+      ) {
+        current = current[key];
+        validPath.push(key);
+      } else {
+        console.error(
+          "Path navigation failed at key:",
+          key,
+          "Available keys:",
+          Object.keys(current || {})
+        );
+        return { success: false, current: null, validPath };
+      }
     }
 
-    current[pathArray[pathArray.length - 1]] = value;
-    setStructure(newStructure);
+    return { success: true, current, validPath };
+  };
+
+  const updateStructureWithNewPath = (path, newValue) => {
+    console.log(
+      "Updating structure at path:",
+      path,
+      "with new value:",
+      newValue
+    );
+    const pathArray = path.split("|||");
+
+    setStructure((prevStructure) => {
+      const newStructure = JSON.parse(JSON.stringify(prevStructure));
+
+      if (pathArray.length === 1) {
+        const oldKey = pathArray[0];
+        if (prevStructure[oldKey] !== undefined) {
+          // For top-level items, we're updating the key
+          if (oldKey !== newValue) {
+            const oldValue = newStructure[oldKey];
+            delete newStructure[oldKey];
+            newStructure[newValue] = oldValue;
+            console.log("Renamed top-level key from", oldKey, "to", newValue);
+          }
+        }
+      } else {
+        const parentPath = pathArray.slice(0, -1);
+        const lastKey = pathArray[pathArray.length - 1];
+
+        // Navigate to parent using the new path format
+        let current = newStructure;
+        for (const key of parentPath) {
+          if (current[key] === undefined) {
+            console.error("Path not found:", parentPath);
+            return prevStructure;
+          }
+          current = current[key];
+        }
+
+        // Check if we're editing a value (string) or a key (object)
+        if (typeof current[lastKey] === "string") {
+          // We're editing the value
+          current[lastKey] = newValue;
+          console.log("Updated value at", lastKey, "to", newValue);
+        } else if (current[lastKey] !== undefined) {
+          // We're editing the key
+          if (lastKey !== newValue) {
+            const oldValue = current[lastKey];
+            delete current[lastKey];
+            current[newValue] = oldValue;
+            console.log("Renamed key from", lastKey, "to", newValue);
+          }
+        } else {
+          console.error("Key not found:", lastKey, "in", Object.keys(current));
+          return prevStructure;
+        }
+      }
+
+      console.log("Updated structure:", newStructure);
+      return newStructure;
+    });
   };
 
   const addItem = (parentPath, isArray = false) => {
-    const pathArray = parentPath.split(".");
-    const newStructure = JSON.parse(JSON.stringify(structure));
+    console.log("Adding item to path:", parentPath, "isArray:", isArray);
 
-    let current = newStructure;
-    for (const key of pathArray) {
-      current = current[key];
-    }
+    setStructure((prevStructure) => {
+      const newStructure = JSON.parse(JSON.stringify(prevStructure));
 
-    if (isArray && Array.isArray(current)) {
-      const newIndex = current.length;
-      current.push(`${String.fromCharCode(97 + newIndex)}. ...`);
-    } else if (typeof current === "object" && current !== null) {
-      const existingKeys = Object.keys(current);
-      let newKey = "New Section";
-      let counter = 1;
+      if (!parentPath) {
+        const existingKeys = Object.keys(newStructure);
+        let newKey = "New Chapter";
+        let counter = 1;
 
-      while (existingKeys.includes(newKey)) {
-        newKey = `New Section ${counter}`;
-        counter++;
+        while (existingKeys.includes(newKey)) {
+          newKey = `New Chapter ${counter}`;
+          counter++;
+        }
+
+        newStructure[newKey] = {
+          "New Section": "Content placeholder",
+        };
+      } else {
+        const pathArray = parentPath.split(".");
+
+        // Use the safe navigation helper
+        const navResult = navigateToPath(newStructure, pathArray);
+
+        if (!navResult.success) {
+          console.error(
+            "Failed to navigate to path for adding item:",
+            pathArray
+          );
+          return prevStructure;
+        }
+
+        const current = navResult.current;
+
+        if (isArray && Array.isArray(current)) {
+          const newIndex = current.length;
+          current.push(`${String.fromCharCode(97 + newIndex)}. New item`);
+        } else if (typeof current === "object" && current !== null) {
+          const existingKeys = Object.keys(current);
+          let newKey = "New Section";
+          let counter = 1;
+
+          while (existingKeys.includes(newKey)) {
+            newKey = `New Section ${counter}`;
+            counter++;
+          }
+
+          current[newKey] = "Content placeholder";
+        }
       }
 
-      current[newKey] = null;
-    }
+      console.log("Added item, new structure:", newStructure);
+      return newStructure;
+    });
 
-    setStructure(newStructure);
+    setHasChanges(true);
   };
 
   const removeItem = (path) => {
+    console.log("Removing item at path:", path);
     const pathArray = path.split(".");
-    const newStructure = JSON.parse(JSON.stringify(structure));
 
-    let current = newStructure;
-    let parent = null;
-    let lastKey = null;
+    setStructure((prevStructure) => {
+      const newStructure = JSON.parse(JSON.stringify(prevStructure));
 
-    for (let i = 0; i < pathArray.length; i++) {
-      if (i === pathArray.length - 1) {
-        lastKey = pathArray[i];
-        break;
+      if (pathArray.length === 1) {
+        delete newStructure[pathArray[0]];
+      } else {
+        const parentPath = pathArray.slice(0, -1);
+        const keyToRemove = pathArray[pathArray.length - 1];
+
+        // Use the safe navigation helper
+        const navResult = navigateToPath(newStructure, parentPath);
+
+        if (!navResult.success) {
+          console.error(
+            "Failed to navigate to path for removing item:",
+            parentPath
+          );
+          return prevStructure;
+        }
+
+        const current = navResult.current;
+
+        if (Array.isArray(current)) {
+          current.splice(Number.parseInt(keyToRemove), 1);
+        } else if (current[keyToRemove] !== undefined) {
+          delete current[keyToRemove];
+        } else {
+          console.error(
+            "Key to remove not found:",
+            keyToRemove,
+            "in",
+            Object.keys(current)
+          );
+          return prevStructure;
+        }
       }
-      parent = current;
-      current = current[pathArray[i]];
-    }
 
-    if (Array.isArray(current)) {
-      current.splice(Number.parseInt(lastKey), 1);
-    } else if (
-      parent &&
-      typeof parent[pathArray[pathArray.length - 2]] === "object"
-    ) {
-      delete current[lastKey];
-    }
+      console.log("Removed item, new structure:", newStructure);
+      return newStructure;
+    });
 
-    setStructure(newStructure);
+    setHasChanges(true);
   };
 
   const resetStructure = () => {
+    console.log("Resetting structure to original");
     setStructure(JSON.parse(JSON.stringify(originalStructure)));
     setExpandedSections({});
     setEditingItem(null);
+    setHasChanges(false);
   };
 
   const generateReport = async () => {
-    if (!topic.trim() || !description.trim()) {
-      alert("Topic and description are required for report generation!");
-      return;
-    }
-
     setIsGenerating(true);
 
     try {
-      // Transform structure back to backend format
       const backendStructure = {};
 
       Object.entries(structure).forEach(([key, value]) => {
@@ -201,12 +398,13 @@ const ReportStructureEditor = () => {
       });
 
       const payload = {
-        topic: topic,
-        description: description,
         structure: backendStructure,
+        report_id: report_id,
       };
 
       console.log("Sending payload to backend:", payload);
+      console.log("Current structure being sent:", structure);
+      console.log("Backend structure being sent:", backendStructure);
 
       const response = await fetch(`${BASE_URL}report_generation/`, {
         method: "POST",
@@ -216,7 +414,10 @@ const ReportStructureEditor = () => {
         },
         body: JSON.stringify(payload),
       });
+
       console.log(response);
+      console.log("Response status:", response.status);
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -224,12 +425,11 @@ const ReportStructureEditor = () => {
       const result = await response.json();
       console.log("Report generation response:", result);
 
-      if (result.status === "success" && result.data?.job_id) {
-        // Navigate to loading page with job_id
+      if (result.status === "success" && result.data?.status) {
         navigate("/report-loading", {
           state: {
-            jobId: result.data.job_id,
-            topic: topic,
+            report_id: report_id,
+            status: result?.data?.status,
           },
         });
       } else {
@@ -243,97 +443,11 @@ const ReportStructureEditor = () => {
     }
   };
 
-  // Drag and Drop Functions
-  const handleDragStart = (e, path, level) => {
-    setDraggedItem({ path, level });
-    e.dataTransfer.effectAllowed = "move";
-  };
-
-  const handleDragOver = (e, path, level) => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = "move";
-    setDragOverItem({ path, level });
-  };
-
-  const handleDragLeave = () => {
-    setDragOverItem(null);
-  };
-
-  const handleDrop = (e, targetPath, targetLevel) => {
-    e.preventDefault();
-
-    if (!draggedItem || draggedItem.path === targetPath) {
-      setDraggedItem(null);
-      setDragOverItem(null);
-      return;
-    }
-
-    // Only allow reordering within the same level
-    if (draggedItem.level === targetLevel) {
-      reorderItems(draggedItem.path, targetPath);
-    }
-
-    setDraggedItem(null);
-    setDragOverItem(null);
-  };
-
-  const reorderItems = (sourcePath, targetPath) => {
-    const sourcePathArray = sourcePath.split(".");
-    const targetPathArray = targetPath.split(".");
-
-    // Only reorder if they have the same parent
-    if (sourcePathArray.length !== targetPathArray.length) return;
-
-    const parentPath = sourcePathArray.slice(0, -1);
-    const sourceKey = sourcePathArray[sourcePathArray.length - 1];
-    const targetKey = targetPathArray[targetPathArray.length - 1];
-
-    const newStructure = JSON.parse(JSON.stringify(structure));
-
-    // Navigate to parent object
-    let parent = newStructure;
-    for (const key of parentPath) {
-      parent = parent[key];
-    }
-
-    // Get all entries and reorder
-    const entries = Object.entries(parent);
-    const sourceIndex = entries.findIndex(([key]) => key === sourceKey);
-    const targetIndex = entries.findIndex(([key]) => key === targetKey);
-
-    if (sourceIndex !== -1 && targetIndex !== -1) {
-      // Remove source item
-      const [sourceEntry] = entries.splice(sourceIndex, 1);
-      // Insert at target position
-      entries.splice(targetIndex, 0, sourceEntry);
-
-      // Rebuild parent object with new order
-      const newParent = {};
-      entries.forEach(([key, value]) => {
-        newParent[key] = value;
-      });
-
-      // Update the parent in structure
-      let current = newStructure;
-      for (let i = 0; i < parentPath.length - 1; i++) {
-        current = current[parentPath[i]];
-      }
-
-      if (parentPath.length === 0) {
-        setStructure(newParent);
-      } else {
-        current[parentPath[parentPath.length - 1]] = newParent;
-        setStructure(newStructure);
-      }
-    }
-  };
-
   const renderStructureItem = (key, value, path = "", level = 0) => {
-    const currentPath = path ? `${path}.${key}` : key;
+    // Use a special separator that won't conflict with dots in keys
+    const currentPath = path ? `${path}|||${key}` : key;
     const isExpanded = expandedSections[currentPath];
     const isEditing = editingItem === currentPath;
-    const isDraggedOver = dragOverItem?.path === currentPath;
-    const isDragging = draggedItem?.path === currentPath;
 
     const getItemIcon = (level) => {
       if (level === 0) return "📚";
@@ -358,14 +472,7 @@ const ReportStructureEditor = () => {
           key={currentPath}
           className={`mb-2 border-l-4 ${getItemColor(
             level
-          )} rounded-r-lg transition-all duration-200 ${
-            isDraggedOver ? "ring-2 ring-blue-400 bg-blue-100" : ""
-          } ${isDragging ? "opacity-50 scale-95" : ""}`}
-          draggable
-          onDragStart={(e) => handleDragStart(e, currentPath, level)}
-          onDragOver={(e) => handleDragOver(e, currentPath, level)}
-          onDragLeave={handleDragLeave}
-          onDrop={(e) => handleDrop(e, currentPath, level)}
+          )} rounded-r-lg transition-all duration-200`}
         >
           <div className="flex items-center justify-between p-3">
             <div className="flex items-center space-x-2">
@@ -387,6 +494,15 @@ const ReportStructureEditor = () => {
               >
                 <FaPlus size={12} />
               </button>
+              {level > 0 && (
+                <button
+                  onClick={() => removeItem(currentPath)}
+                  className="p-1 text-red-500 hover:bg-red-100 rounded transition-colors"
+                  title="Remove section"
+                >
+                  <FaMinus size={12} />
+                </button>
+              )}
             </div>
           </div>
           <div className="pl-8 pb-3">
@@ -397,7 +513,7 @@ const ReportStructureEditor = () => {
               >
                 <span className="text-gray-700">{item}</span>
                 <button
-                  onClick={() => removeItem(`${currentPath}.${index}`)}
+                  onClick={() => removeItem(`${currentPath}|||${index}`)}
                   className="opacity-0 group-hover:opacity-100 p-1 text-red-500 hover:bg-red-100 rounded transition-all"
                   title="Remove item"
                 >
@@ -411,25 +527,25 @@ const ReportStructureEditor = () => {
     }
 
     if (typeof value === "object" && value !== null) {
+      // Sort the subsections numerically
+      const sortedEntries = Object.entries(value).sort(([keyA], [keyB]) => {
+        const numA = getSubsectionNumber(keyA);
+        const numB = getSubsectionNumber(keyB);
+        return numA - numB;
+      });
+
       return (
         <div
           key={currentPath}
           className={`mb-2 border-l-4 ${getItemColor(
             level
-          )} rounded-r-lg transition-all duration-200 ${
-            isDraggedOver ? "ring-2 ring-blue-400 bg-blue-100" : ""
-          } ${isDragging ? "opacity-50 scale-95" : ""}`}
-          draggable
-          onDragStart={(e) => handleDragStart(e, currentPath, level)}
-          onDragOver={(e) => handleDragOver(e, currentPath, level)}
-          onDragLeave={handleDragLeave}
-          onDrop={(e) => handleDrop(e, currentPath, level)}
+          )} rounded-r-lg transition-all duration-200`}
         >
           <div
             className="flex items-center justify-between p-3 cursor-pointer hover:bg-gray-50"
             onClick={() => toggleSection(currentPath)}
           >
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1 sm:space-x-2">
               <FaGripVertical
                 className="text-gray-400 cursor-move hover:text-gray-600"
                 size={12}
@@ -447,27 +563,32 @@ const ReportStructureEditor = () => {
                     type="text"
                     value={editValue}
                     onChange={(e) => setEditValue(e.target.value)}
-                    className="px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#0D0D82]"
+                    className="px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#0D0D82] min-w-[200px]"
                     onKeyPress={(e) => e.key === "Enter" && saveEdit()}
                     autoFocus
+                    placeholder="Enter section content..."
                   />
                   <button
                     onClick={saveEdit}
-                    className="p-1 text-green-600 hover:bg-green-100 rounded transition-colors"
+                    className="p-1 text-[#0D0D82] hover:bg-green-100 rounded transition-colors"
+                    title="Save changes"
                   >
                     <FaCheck size={12} />
                   </button>
                   <button
                     onClick={cancelEdit}
                     className="p-1 text-red-600 hover:bg-red-100 rounded transition-colors"
+                    title="Cancel editing"
                   >
                     <FaTimes size={12} />
                   </button>
                 </div>
               ) : (
-                <span className="font-medium text-gray-800">{key}</span>
+                <span className="text-[15px] sm:text-base font-medium text-gray-800">
+                  {key}
+                </span>
               )}
-              <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+              <span className="hidden sm:block text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
                 {Object.keys(value).length} sections
               </span>
             </div>
@@ -479,7 +600,7 @@ const ReportStructureEditor = () => {
                     startEditing(currentPath, key);
                   }}
                   className="p-1 text-blue-600 hover:bg-blue-100 rounded transition-colors"
-                  title="Edit section name"
+                  title="Edit section content"
                 >
                   <FaEdit size={12} />
                 </button>
@@ -510,7 +631,7 @@ const ReportStructureEditor = () => {
           </div>
           {isExpanded && (
             <div className="pl-6 pb-3">
-              {Object.entries(value).map(([subKey, subValue]) =>
+              {sortedEntries.map(([subKey, subValue]) =>
                 renderStructureItem(subKey, subValue, currentPath, level + 1)
               )}
             </div>
@@ -519,19 +640,13 @@ const ReportStructureEditor = () => {
       );
     }
 
+    // This is the leaf node - where the VALUE (yellow text) should be editable
     return (
       <div
         key={currentPath}
         className={`mb-2 border-l-4 ${getItemColor(
           level
-        )} rounded-r-lg transition-all duration-200 ${
-          isDraggedOver ? "ring-2 ring-blue-400 bg-blue-100" : ""
-        } ${isDragging ? "opacity-50 scale-95" : ""}`}
-        draggable
-        onDragStart={(e) => handleDragStart(e, currentPath, level)}
-        onDragOver={(e) => handleDragOver(e, currentPath, level)}
-        onDragLeave={handleDragLeave}
-        onDrop={(e) => handleDrop(e, currentPath, level)}
+        )} rounded-r-lg transition-all duration-200`}
       >
         <div className="flex items-center justify-between p-3">
           <div className="flex items-center space-x-2">
@@ -541,42 +656,50 @@ const ReportStructureEditor = () => {
             />
             {isEditing ? (
               <div className="flex items-center space-x-2">
+                <span className="text-sm font-medium text-blue-600 bg-blue-100 px-2 py-1 rounded">
+                  {key}
+                </span>
                 <input
                   type="text"
                   value={editValue}
                   onChange={(e) => setEditValue(e.target.value)}
-                  className="px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#0D0D82]"
+                  className="px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#0D0D82] min-w-[200px]"
                   onKeyPress={(e) => e.key === "Enter" && saveEdit()}
                   autoFocus
+                  placeholder="Enter content..."
                 />
                 <button
                   onClick={saveEdit}
-                  className="p-1 text-green-600 hover:bg-green-100 rounded transition-colors"
+                  className="p-1 text-[#0D0D82] hover:bg-green-100 rounded transition-colors"
+                  title="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   Save changes"
                 >
                   <FaCheck size={12} />
                 </button>
                 <button
                   onClick={cancelEdit}
                   className="p-1 text-red-600 hover:bg-red-100 rounded transition-colors"
+                  title="Cancel editing"
                 >
                   <FaTimes size={12} />
                 </button>
               </div>
             ) : (
-              <span className="text-gray-800 ml-7 font-semibold">{key}</span>
-            )}
-            {value && typeof value === "string" && (
-              <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
-                {value.length > 20 ? `${value.substring(0, 20)}...` : value}
-              </span>
+              <div className="flex items-center space-x-2 ml-7">
+                <span className="text-sm font-medium text-blue-600 bg-blue-100 px-2 py-1 rounded">
+                  {key}
+                </span>
+                <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
+                  {value}
+                </span>
+              </div>
             )}
           </div>
           <div className="flex items-center space-x-1">
             {!isEditing && (
               <button
-                onClick={() => startEditing(currentPath, key)}
+                onClick={() => startEditing(currentPath, value, true)}
                 className="p-1 text-blue-600 hover:bg-blue-100 rounded transition-colors"
-                title="Edit item name"
+                title="Edit content"
               >
                 <FaEdit size={12} />
               </button>
@@ -596,82 +719,76 @@ const ReportStructureEditor = () => {
     );
   };
 
+  // Sort chapters numerically before rendering
+  const sortedChapters = Object.entries(structure).sort(([keyA], [keyB]) => {
+    const numA = getChapterNumber(keyA);
+    const numB = getChapterNumber(keyB);
+    return numA - numB;
+  });
+
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-black p-4 sm:p-6">
+      <div className="">
         {/* Header */}
-        <div className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-            <div className="mb-4 md:mb-0">
-              <h1 className="text-3xl font-bold text-gray-800 flex items-center">
-                <FaFileAlt className="mr-3 text-blue-600" />
-                Report Structure Editor
-              </h1>
-              <p className="text-gray-600 mt-2">
-                Drag and drop to reorder sections, then customize your report
-                structure
-              </p>
-              {topic && (
-                <div className="mt-3 p-3 bg-blue-50 rounded-lg">
-                  <p className="text-sm font-medium text-blue-800">
-                    Topic: {topic}
-                  </p>
-                </div>
-              )}
-            </div>
-            <div className="flex flex-wrap gap-3">
-              <button
-                onClick={() => setExpandedSections({})}
-                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex items-center"
-              >
-                <FaCog className="mr-2" size={14} />
-                Collapse All
-              </button>
-              <button
-                onClick={() => {
-                  const allPaths = {};
-                  const addPaths = (obj, path = "") => {
-                    Object.keys(obj).forEach((key) => {
-                      const currentPath = path ? `${path}.${key}` : key;
-                      if (
-                        typeof obj[key] === "object" &&
-                        obj[key] !== null &&
-                        !Array.isArray(obj[key])
-                      ) {
-                        allPaths[currentPath] = true;
-                        addPaths(obj[key], currentPath);
-                      }
-                    });
-                  };
-                  addPaths(structure);
-                  setExpandedSections(allPaths);
-                }}
-                className="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors flex items-center"
-              >
-                <FaEye className="mr-2" size={14} />
-                Expand All
-              </button>
-              <button
-                onClick={resetStructure}
-                className="px-4 py-2 bg-orange-100 text-orange-700 rounded-lg hover:bg-orange-200 transition-colors flex items-center"
-              >
-                <FaUndo className="mr-2" size={14} />
-                Reset
-              </button>
-            </div>
-          </div>
+        <div className="md:border-b-[1px]">
+          <h1 className="text-[20px] sm:text-2xl md:text-3xl font-bold text-white">
+            Report Structure Outline
+          </h1>
+          <p className="hidden md:block text-white mt-1 mb-2 text-[17px] font-medium max-w-[300px] sm:max-w-[900px]">
+            Review and edit generated report outline below
+          </p>
+        </div>
+
+        <div className="bg-white rounded-lg p-0 mb-4 sm:mb-6 shadow-sm">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between"></div>
         </div>
 
         {/* Structure Editor */}
-        <div className="bg-white rounded-lg p-6 shadow-sm">
+        <div className="bg-white rounded-lg p-2 sm:p-4 md:p-6 shadow-sm">
           <div className="mb-4">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">
-              Report Structure
-            </h2>
-            <p className="text-gray-600 text-sm">
-              🔄 Drag the grip icons to reorder sections • ✏️ Click edit to
-              rename • ➕ Add new sections • 🗑️ Remove unwanted sections
-            </p>
+            {topic && (
+              <div className="mb-3 p-3 bg-blue-50 rounded-lg">
+                <p className="text-[14px] sm:text-base font-semibold text-[#0D0D82]">
+                  Report Topic: {capitalizedTopic}
+                </p>
+              </div>
+            )}
+
+            {/* {hasChanges && (
+              <div className="mb-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+                <div className="flex items-center space-x-2">
+                  <FaCheck className="text-green-600" size={14} />
+                  <p className="text-green-800 text-sm font-medium">
+                    Changes detected!
+                  </p>
+                </div>
+              </div>
+            )} */}
+
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+              <div>
+                <p className="text-gray-600 font-medium text-[13px] sm:text-sm">
+                  <button className=" text-[#0D0D82] ">
+                    <FaEdit size={14} />
+                  </button>{" "}
+                  Click to edit outline content{" "}
+                </p>
+                <p className="text-gray-600 font-medium text-[13px] sm:text-sm mt-1">
+                  <button className=" text-[#0D0D82]">
+                    <FaPlus size={14} />
+                  </button>{" "}
+                  Click to add new sections
+                </p>
+              </div>
+              {hasChanges && (
+                <button
+                  onClick={resetStructure}
+                  className="text-sm text-white bg-red-700 p-2 rounded-lg font-medium"
+                >
+                  Reset to Original
+                </button>
+              )}
+            </div>
           </div>
 
           {Object.keys(structure).length === 0 ? (
@@ -684,7 +801,7 @@ const ReportStructureEditor = () => {
             </div>
           ) : (
             <div className="space-y-2">
-              {Object.entries(structure).map(([key, value]) =>
+              {sortedChapters.map(([key, value]) =>
                 renderStructureItem(key, value, "", 0)
               )}
             </div>
@@ -694,12 +811,8 @@ const ReportStructureEditor = () => {
         {/* Footer Info */}
         <div className="mt-6 bg-white rounded-lg p-4 shadow-sm">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between text-sm text-gray-600">
-            <div className="mb-2 md:mb-0">
-              <span className="font-medium">Total Sections:</span>{" "}
-              {Object.keys(structure).length}
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center">
+            <div className="flex flex-wrap items-center sm:space-x-4">
+              <div className="flex items-center mr-4 sm:mr-0">
                 <div className="w-3 h-3 bg-[#0D0D82] rounded mr-2"></div>
                 <span>Main Chapters</span>
               </div>
@@ -707,17 +820,17 @@ const ReportStructureEditor = () => {
                 <div className="w-3 h-3 bg-green-500 rounded mr-2"></div>
                 <span>Sections</span>
               </div>
-              <div className="flex items-center">
+              {/* <div className="flex items-center">
                 <div className="w-3 h-3 bg-purple-500 rounded mr-2"></div>
                 <span>Subsections</span>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
 
         <button
           onClick={generateReport}
-          className="mt-6 w-full md:w-auto px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center font-medium text-lg disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+          className="mt-6 w-full md:w-auto px-8 py-2 sm:py-3 bg-[#0D0D82] text-white rounded-lg hover:bg-[#0e0ea1] transition-colors flex items-center justify-center font-medium text-lg disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
           disabled={Object.keys(structure).length === 0 || isGenerating}
         >
           {isGenerating ? (

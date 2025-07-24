@@ -90,7 +90,7 @@ const Navbar = () => {
             {localStorage.getItem("seydamtoken") ? (
               <button
                 onClick={() => navigate("/dashboard")}
-                className="border-[2px] border-[#0D0D82] font-semibold text-[#ffffff] bg-[#0D0D82] py-[6px] px-6 rounded-md"
+                className="border-[2px] border-[#0D0D82] font-semibold text-[#ffffff] bg-[#0D0D82] py-[6px] px-6 rounded-lg"
               >
                 Dashboard
               </button>
@@ -220,9 +220,11 @@ const Navbar = () => {
                   </div>
                 </nav>
 
-                <div className="absolute bottom-0 left-0 right-0 p-5 border-t border-gray-200 bg-gray-100">
+                <div className="absolute bottom-0 left-0 right-0 p-5 border-t border-gray-300 bg-gray-100">
                   <div className="flex items-center justify-center">
-                    <div className="text-sm text-gray-600">© 2025 SEYDAM</div>
+                    <div className="text-sm text-black font-medium">
+                      © 2025 SEYDAM AI
+                    </div>
                   </div>
                 </div>
               </div>

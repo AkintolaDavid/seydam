@@ -8,6 +8,7 @@ import FAQSection from "../components/Landing/HighseasFaq";
 import Banner from "../components/Landing/Banner";
 import Category from "../components/Landing/Category";
 import IndustriesGrid from "../components/Landing/IndustriesGrid";
+import LandingFeatures from "../components/LandingFeatures";
 
 export default function LandingPage() {
   return (
@@ -15,7 +16,9 @@ export default function LandingPage() {
       <Navbar />
       <Home />
       <Banner />
-      <IndustriesGrid /> <Pricing />
+      <IndustriesGrid />
+      <LandingFeatures />
+      {/* <Pricing /> */}
       <FAQSection />
       <Footer />
     </div>

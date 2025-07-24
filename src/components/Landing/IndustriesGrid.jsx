@@ -54,7 +54,7 @@ export default function IndustriesGrid() {
     <>
       <section className=" px-[20px] md:px-[65px] lg:px-[104px] mx-auto max-w-[105rem] justify-between flex flex-col py-14 md:py-24  items-center">
         <div className="text-center mb-12 w-full">
-          <h2 className="text-4xl font-bold text-[#11117a] lg:mt-3 ">
+          <h2 className="text-[34px] sm:text-[42px] font-bold text-[#11117a] lg:mt-3 ">
             Key Benefits
           </h2>
         </div>
@@ -63,9 +63,9 @@ export default function IndustriesGrid() {
           {industries.map((industry, index) => (
             <div
               key={index}
-              className=" p-6 h-[200px] sm:h-[210px] lg:h-[230px] flex flex-col items-start rounded-lg shadow-sm border-[1px] bg-white border-[#0D0D82] transition-shadow duration-300"
+              className=" p-3 sm:p-6 h-auto lg:h-[230px] flex flex-col items-start rounded-lg shadow-sm border-[1px] bg-white border-[#0D0D82] transition-shadow duration-300"
             >
-              <div className="flex flex-col gap-3 mb-2">
+              <div className="flex flex-col gap-3 mb-1 sm:mb-2">
                 <div
                   className="inline-flex items-center justify-center w-10 h-10 mb-0 rounded-full"
                   style={{ backgroundColor: "rgba(26, 26, 140, 0.2)" }}
@@ -74,7 +74,7 @@ export default function IndustriesGrid() {
                 </div>{" "}
                 <h3 className="text-xl font-bold">{industry.title}</h3>
               </div>
-              <p className="text-gray-600 text-[16px] md:text-[17px] leading-7">
+              <p className="text-gray-700 text-[16px] md:text-[17px] leading-7">
                 {industry.description}
               </p>
             </div>

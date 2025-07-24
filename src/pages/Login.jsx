@@ -24,12 +24,9 @@ export default function Login({ setToken }) {
         email,
         password,
       });
-
       setMessage(response.data.message);
 
       localStorage.setItem("seydamtoken", response.data.token);
-      setToken(response.data.token); // ✅ Update token state
-      localStorage.setItem("email", response.data.email);
       localStorage.setItem("username", response.data.username);
       toast({
         title: "Login Successful",
@@ -58,6 +55,7 @@ export default function Login({ setToken }) {
 
   useEffect(() => {
     localStorage.removeItem("seydamtoken");
+    localStorage.removeItem("username");
   }, []);
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
@@ -65,7 +63,7 @@ export default function Login({ setToken }) {
         onClick={() => {
           navigate("/");
         }}
-        className="absolute top-10 left-8 flex items-center "
+        className="absolute top-10 left-4 sm:left-8 flex items-center "
       >
         <div className="p-[6px] border-[2px] text-[#0D0D82] border-[#0D0D82] rounded-lg">
           <FaAngleLeft className="text-[#0D0D82]" />
@@ -73,7 +71,7 @@ export default function Login({ setToken }) {
         <span className="text-lg ml-1 font-medium text-[#0D0D82]">Back</span>
       </button>
       {/* Form Section */}
-      <div className="flex-1 flex items-center justify-center p-8 lg:p-12">
+      <div className="flex-1 flex items-center justify-center p-4 sm:p-8 lg:p-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -112,7 +110,7 @@ export default function Login({ setToken }) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="mt-1 bg-white block w-full rounded-lg border border-[#0D0D82] px-4 py-3 
+                  className="mt-1 bg-white block w-full rounded-lg border border-[#0D0D82] px-4 py-2 sm:py-3 
              focus:outline-none focus:ring-0 focus:border-[#0D0D82]"
                   placeholder="Enter your email"
                 />
@@ -132,7 +130,7 @@ export default function Login({ setToken }) {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="block bg-white  w-full rounded-lg border border-[#0D0D82] px-4 py-3  
+                    className="block bg-white  w-full rounded-lg border border-[#0D0D82] px-4 py-2 sm:py-3  
                              focus pr-12"
                     placeholder="Enter your password"
                   />
@@ -151,7 +149,7 @@ export default function Login({ setToken }) {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="relative w-full flex justify-center items-center px-4 py-3 text-white bg-[#0D0D82] 
+                className="relative w-full flex justify-center items-center px-4 py-2 sm:py-3 text-white bg-[#0D0D82] 
                          rounded-lg  focus:outline-none focus:ring-2 focus:ring-[#0D0D82] 
                          focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
@@ -159,12 +157,13 @@ export default function Login({ setToken }) {
                   <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 ) : (
                   <>
-                    <LogIn className="w-5 h-5 mr-2" />
-                    Sign in
+                    {/* <LogIn className="w-5 h-5 mr-2" /> */}
+                    Sign In
                   </>
                 )}
               </button>
-              <span className="flex items-end  justify-end text-right text-base text-gray-600">
+
+              <span className="flex items-end  justify-end text-right text-base text-gray-600 ">
                 <Link
                   to="/forgotpassword"
                   className="font-medium text-[#0D0D82]"
@@ -172,12 +171,18 @@ export default function Login({ setToken }) {
                   Forgot password?
                 </Link>
               </span>
-              <p className="text-center text-base text-gray-800">
-                Don't have an account yet?{" "}
-                <Link to="/signup" className="font-medium text-[#0D0D82]">
+
+              <div>
+                <span className="text-center flex justify-center mb-1 text-lg text-black pt-3">
+                  Don't have an account yet?
+                </span>{" "}
+                <Link
+                  to="/signup"
+                  className="text-center font-medium flex justify-center text-lg text-[#0D0D82]"
+                >
                   Click To Register
                 </Link>
-              </p>
+              </div>
             </div>
           </form>
         </motion.div>

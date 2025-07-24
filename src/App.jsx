@@ -27,6 +27,7 @@ import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profie";
 import BuyCredits from "./pages/Buycredit";
 import VerifyOTP from "./pages/SignupOtp";
+import TextEditor from "./pages/TextEditor";
 
 function App() {
   // Initialize sidebar state based on screen size
@@ -72,7 +73,7 @@ function App() {
                 <Route path="/login" element={<Login setToken={setToken} />} />
                 {/* Sign Up Route */}
                 <Route path="/signup" element={<Signup />} />
-                <Route path="/signupotp" element={<VerifyOTP />} />
+                <Route path="/signupotp" element={<VerifyOTP />} />  
                 {/* Protected Routes */}
                 {/* <Route
                   path="/dashboard"
@@ -82,6 +83,16 @@ function App() {
                     </ProtectedRoute>
                   }
                 /> */}
+                 <Route
+                  path="/text-editor"
+                  element={
+                    <ProtectedRoute>
+                      <DashboardLayout>
+                        <TextEditor />
+                      </DashboardLayout>
+                    </ProtectedRoute>
+                  }
+                />
                 <Route
                   path="/reportform"
                   element={

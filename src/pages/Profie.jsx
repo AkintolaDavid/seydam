@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FaFileAlt,
   FaClock,
@@ -12,71 +12,69 @@ import {
   FaEyeSlash,
   FaSave,
   FaArrowLeft,
-} from "react-icons/fa"
+} from "react-icons/fa";
 
 const Profile = () => {
-  const navigate = useNavigate()
-  const [showCurrentPassword, setShowCurrentPassword] = useState(false)
-  const [showNewPassword, setShowNewPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const navigate = useNavigate();
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
-  })
-  const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState("")
+  });
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setMessage("")
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
 
     // Validation
     if (formData.newPassword !== formData.confirmPassword) {
-      setMessage("New passwords do not match")
-      setLoading(false)
-      return
+      setMessage("New passwords do not match");
+      setLoading(false);
+      return;
     }
 
     if (formData.newPassword.length < 6) {
-      setMessage("New password must be at least 6 characters long")
-      setLoading(false)
-      return
+      setMessage("New password must be at least 6 characters long");
+      setLoading(false);
+      return;
     }
 
     try {
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      setMessage("Password updated successfully!")
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      setMessage("Password updated successfully!");
       setFormData({
         currentPassword: "",
         newPassword: "",
         confirmPassword: "",
-      })
+      });
     } catch (error) {
-      setMessage("Failed to update password. Please try again.")
+      setMessage("Failed to update password. Please try again.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleLogout = () => {
-    localStorage.removeItem("token")
-    navigate("/login")
-  }
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
-  
-
       {/* Main Content */}
       <div className="flex-1 p-8">
         {/* Header */}
@@ -88,18 +86,26 @@ const Profile = () => {
             <FaArrowLeft />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">Profile Settings</h1>
-            <p className="text-gray-600 mt-1">Manage your account settings and password</p>
+            <h1 className="text-3xl font-bold text-gray-800">
+              Profile Settings
+            </h1>
+            <p className="text-gray-600 mt-1">
+              Manage your account settings and password
+            </p>
           </div>
         </div>
 
         <div className="max-w-2xl">
           {/* User Info Card */}
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">Account Information</h2>
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              Account Information
+            </h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Email
+                </label>
                 <input
                   type="email"
                   value="user@example.com"
@@ -108,7 +114,9 @@ const Profile = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Full Name
+                </label>
                 <input
                   type="text"
                   value="John Doe"
@@ -117,7 +125,9 @@ const Profile = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Member Since</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Member Since
+                </label>
                 <input
                   type="text"
                   value="January 2024"
@@ -130,7 +140,9 @@ const Profile = () => {
 
           {/* Change Password Card */}
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">Change Password</h2>
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              Change Password
+            </h2>
 
             {message && (
               <div
@@ -146,7 +158,9 @@ const Profile = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Current Password
+                </label>
                 <div className="relative">
                   <input
                     type={showCurrentPassword ? "text" : "password"}
@@ -168,7 +182,9 @@ const Profile = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  New Password
+                </label>
                 <div className="relative">
                   <input
                     type={showNewPassword ? "text" : "password"}
@@ -190,7 +206,9 @@ const Profile = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Confirm New Password
+                </label>
                 <div className="relative">
                   <input
                     type={showConfirmPassword ? "text" : "password"}
@@ -215,13 +233,12 @@ const Profile = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-[#0D0D82] text-white py-3 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? (
                     <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
                   ) : (
                     <>
-                      <FaSave />
                       <span>Update Password</span>
                     </>
                   )}
@@ -232,7 +249,7 @@ const Profile = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

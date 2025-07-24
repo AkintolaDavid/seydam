@@ -43,6 +43,7 @@ export default function ForgotPassword() {
 
   useEffect(() => {
     localStorage.removeItem("seydamtoken");
+    localStorage.removeItem("username");
   }, []);
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">

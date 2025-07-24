@@ -34,7 +34,7 @@ export default function Signup() {
             "Content-Type": "application/json",
           },
         }
-      ); 
+      );
       if (response.status === 200) {
         toast({
           title: "OTP successfully sent to your mail",
@@ -43,15 +43,14 @@ export default function Signup() {
           isClosable: true,
           position: "top-right",
         });
-      
+
         localStorage.setItem("signupemail", email);
-      
+
         // Wait 2 seconds before navigating
         setTimeout(() => {
           navigate("/signupotp");
         }, 2000);
       }
-      
     } catch (error) {
       const errorMsg = error.response?.data?.error || "Error signing up";
       // ✅ Show error toast from backend message
@@ -70,6 +69,7 @@ export default function Signup() {
 
   useEffect(() => {
     localStorage.removeItem("seydamtoken");
+    localStorage.removeItem("username");
   }, []);
 
   return (
@@ -79,14 +79,14 @@ export default function Signup() {
         onClick={() => {
           navigate("/");
         }}
-        className="absolute top-10 left-8 flex items-center "
+        className="absolute top-10 left-4 sm:left-8 flex items-center "
       >
         <div className="p-[6px] border-[2px] text-[#0D0D82] border-[#0D0D82] rounded-lg">
           <FaAngleLeft className="text-[#0D0D82]" />
         </div>{" "}
         <span className="text-lg ml-1 font-medium text-[#0D0D82]">Back</span>
       </button>
-      <div className="flex-1 flex items-center justify-center p-8 lg:p-12">
+      <div className="flex-1 flex items-center justify-center p-4 sm:p-8 lg:p-12 mt-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -129,7 +129,7 @@ export default function Signup() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
-                  className="mt-1 block w-full rounded-lg border border-[#0D0D82] px-4 py-3 placeholder-gray-400 
+                  className="mt-1 block w-full rounded-lg border border-[#0D0D82] px-4 py-2 sm:py-3 placeholder-gray-400 
                            focus:outline-none focus:ring-0 focus:border-[#0D0D82]"
                   placeholder="Enter your full name"
                 />
@@ -148,7 +148,7 @@ export default function Signup() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="mt-1 block w-full rounded-lg border border-[#0D0D82] px-4 py-3 placeholder-gray-400 
+                  className="mt-1 block w-full rounded-lg border border-[#0D0D82] px-4 py-2 sm:py-3 placeholder-gray-400 
                            focus:outline-none focus:ring-0 focus:border-[#0D0D82]"
                   placeholder="Enter your email"
                 />
@@ -167,7 +167,7 @@ export default function Signup() {
                     value={password1}
                     onChange={(e) => setPassword1(e.target.value)}
                     required
-                    className="block w-full rounded-lg border border-[#0D0D82] px-4 py-3 placeholder-gray-400 
+                    className="block w-full rounded-lg border border-[#0D0D82] px-4 py-2 sm:py-3 placeholder-gray-400 
                              focus:outline-none focus:ring-0 focus:border-[#0D0D82] pr-12"
                     placeholder="Create a password"
                   />
@@ -194,7 +194,7 @@ export default function Signup() {
                     value={password2}
                     onChange={(e) => setPassword2(e.target.value)}
                     required
-                    className="block w-full rounded-lg border border-[#0D0D82] px-4 py-3 placeholder-gray-400 
+                    className="block w-full rounded-lg border border-[#0D0D82] px-4 py-2 sm:py-3 placeholder-gray-400 
                              focus:outline-none focus:ring-0 focus:border-[#0D0D82] pr-12"
                     placeholder="Confirm password"
                   />
@@ -213,7 +213,7 @@ export default function Signup() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="relative w-full flex justify-center items-center px-4 py-3 text-white bg-[#0D0D82] 
+                className="relative w-full flex justify-center items-center px-4 py-2 sm:py-3 text-white bg-[#0D0D82] 
                          rounded-lg 
                          focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
@@ -221,18 +221,22 @@ export default function Signup() {
                   <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 ) : (
                   <>
-                    <UserPlus className="w-5 h-5 mr-2" />
+                    {/* <UserPlus className="w-5 h-5 mr-2" /> */}
                     Register
                   </>
                 )}
               </button>
-
-              <p className="text-center text-base text-gray-600">
-                Already have an account?{" "}
-                <Link to="/login" className="font-medium text-[#0D0D82]">
+              <div>
+                <span className="text-center flex justify-center mb-1 text-lg text-black pt-3">
+                  Already have an account?{" "}
+                </span>{" "}
+                <Link
+                  to="/login"
+                  className="text-center font-medium flex justify-center text-lg text-[#0D0D82]"
+                >
                   Click To Sign In
                 </Link>
-              </p>
+              </div>
             </div>
           </form>
         </motion.div>
