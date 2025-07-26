@@ -71,17 +71,16 @@ const Dashboard = () => {
   };
   const username = localStorage.getItem("username");
   const capitalizedUsername = username
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+    ?.split(" ")
+    ?.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    ?.join(" ");
   const [data, setdata] = useState([]);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const toast = useToast();
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const token = localStorage.getItem("seydamtoken"); // Get token from storage
-        console.log(token);
+        const token = localStorage.getItem("seydamtoken");
         const response = await axios.get(`${BASE_URL}dashboard`, {
           headers: {
             Authorization: `Token ${token}`,
@@ -95,7 +94,7 @@ const Dashboard = () => {
     };
 
     fetchProducts();
-  }, []); 
+  }, []);
 
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -144,43 +143,38 @@ const Dashboard = () => {
   };
 
   const viewreport = async (report_id) => {
-   try {
-              const reportResponse = await fetch(
-                `${BASE_URL}download-report/${report_id}/`,
-                {
-                  headers: {
-                    Authorization: `Token ${
-                      localStorage.getItem("seydamtoken") || ""
-                    }`,
-                  },
-                }
-              );
-              if (reportResponse.ok) {
-                const reportJsonData = await reportResponse.json();
-                console.log("Report JSON data fetched:", reportJsonData);
+    try {
+      const reportResponse = await fetch(
+        `${BASE_URL}download-report/${report_id}/`,
+        {
+          headers: {
+            Authorization: `Token ${localStorage.getItem("seydamtoken") || ""}`,
+          },
+        }
+      );
+      if (reportResponse.ok) {
+        const reportJsonData = await reportResponse.json();
+        console.log("Report JSON data fetched:", reportJsonData);
 
-                // Process the JSON data through formatContentToHtml (same as JsonImporter)
-                const formattedHtml = formatContentToHtml(reportJsonData);
-                // Navigate to text editor with the formatted HTML content
-                setTimeout(() => {
-                  navigate("/text-editor", {
-                    state: {
-                      importedContent: formattedHtml,
-                      // report_id: report_id,
-                      // source: "report_generation",
-                    },
-                  });
-                }, 1500);
-              } else {
-                console.error(
-                  "Failed to fetch report data:",
-                  reportResponse.status
-                );
-              }
-            } catch (reportError) {
-              console.error("Error fetching report:", reportError);
-              alert("Error fetching report. Please try again.");
-            }
+        // Process the JSON data through formatContentToHtml (same as JsonImporter)
+        const formattedHtml = formatContentToHtml(reportJsonData);
+        // Navigate to text editor with the formatted HTML content
+        setTimeout(() => {
+          navigate("/text-editor", {
+            state: {
+              importedContent: formattedHtml,
+              // report_id: report_id,
+              // source: "report_generation",
+            },
+          });
+        }, 1500);
+      } else {
+        console.error("Failed to fetch report data:", reportResponse.status);
+      }
+    } catch (reportError) {
+      console.error("Error fetching report:", reportError);
+      alert("Error fetching report. Please try again.");
+    }
   };
   return (
     <div className="min-h-screen bg-black flex p-4 sm:p-6">
@@ -221,6 +215,12 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
           {/* New Report Card */}
           <div className="lg:col-span-2">
+            {" "}
+            {/* <div className="block md:hidden">
+              <h1 className="text-lg md:text-xl font-bold text-white">
+                Wsome {capitalizedUsername}
+              </h1>
+            </div> */}
             <div className="bg-[#ffffff]  rounded-lg p-4 relative overflow-hidden">
               <div className="relative z-10 text-black">
                 <h2 className="text-[20px] sm:text-[22px] lg:text-2xl font-bold mb-2">
@@ -297,110 +297,86 @@ const Dashboard = () => {
           </div>
           <div className="p-6">
             <div className="space-y-4">
-              {data?.reports?.map((report, index) => (
-                <div
-                  key={index}
-                  className="flex  flex-col sm:flex-row items-end sm:items-center justify-between p-2 sm:p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  <div className="flex items-start sm:items-center space-x-4">
+              {data?.reports?.length === 0 || !data?.reports ? (
+                // 🔹 Dummy UI if no reports
+                <div className="flex flex-col md:flex-row  md:items-center justify-between p-2 sm:p-4 border border-gray-200 rounded-lg ">
+                  <div className="flex items-center space-x-4">
                     <div className="bg-blue-50 p-[6px] sm:p-2 rounded-lg">
                       <FaFileAlt className="text-[#060668] text-2xl" />
                     </div>
                     <div>
-                      <h4 className="text-[13px] sm:text-base font-medium text-gray-800">
-                        <p>
-                          {report.report_topic.length > 80
-                            ? report.report_topic.slice(0, 80) + "..."
-                            : report.report_topic}
-                        </p>
-
-                        {/* {report?.report_topic
-                          .split(" ")
-                          .map(
-                            (word) =>
-                              word.charAt(0).toUpperCase() + word.slice(1)
-                          )
-                          .join(" ")} */}
+                      <h4 className="text-[15px] sm:text-base font-medium text-gray-900">
+                        CREATE YOUR FIRST REPORT
                       </h4>
-                      <div className="flex items-center space-x-4 text-sm text-gray-600 mt-1">
-                        {/* <span className="flex items-center space-x-1">
-                          <FaCalendarAlt />
-                          <span>
-                            {new Date(report.date).toLocaleDateString()}
-                          </span>
-                        </span>
-                        <span>{report.pages} pages</span> */}
-                        <span className="bg-gray-50 text-black px-2 py-1 rounded-full text-xs">
-                          {new Date(report.created_at).toLocaleDateString()}
-                        </span> 
-                        <span
-  className={`px-2 py-1 rounded-full text-xs
-    ${
-      report.status === "complete"
-        ? "bg-green-100 text-green-800"
-        : report.status === "outline"
-        ? "bg-red-100 text-red-800"
-        : "bg-red-100 text-red-800"
-    }
-  `}
->
-  {report.status}
-</span>
-
-                      </div>
                     </div>
                   </div>
-                  <div className="flex mt-3 sm:mt-0 space-x-2">
-                  {report.status !== "outline" ? (
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => viewreport(report.report_id)}
-                          className="bg-blue-900 text-white font-medium rounded-lg py-1 text-sm px-2"
-                        >
-                          View Report
-                        </button>
-                      </div>
-                   ) : report.status === "outline" ? (
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => handleOutline(report.report_id)}
-                          className="bg-blue-900 text-white font-medium rounded-md py-1 text-sm px-3"
-                        >
-                          View Outline
-                        </button>
-                      </div>
-                    ) : null}
-               {/*      {report.status === "completed" ? (
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => viewreport(report.report_id)}
-                          className="bg-blue-900 text-white font-medium rounded-lg py-1 text-sm px-2"
-                        >
-                          View Report
-                        </button>
-                      </div>
-                    ) : report.status === "in progress" ? (
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => viewreport(report.report_id)}
-                          className="bg-blue-900 text-white font-medium rounded-lg py-1 text-sm px-2"
-                        >
-                          View Report
-                        </button>
-                      </div>
-                    ) : report.status === "outline" ? (
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => handleOutline(report.report_id)}
-                          className="bg-blue-900 text-white font-medium rounded-md py-1 text-sm px-3"
-                        >
-                          View Outline
-                        </button>
-                      </div>
-                    ) : null} */}
+                  <div className="flex items-end justify-end mt-4 sm:mt-0 space-x-2">
+                    <button
+                      onClick={handleCreateNewReport} // 👈 Replace with your actual handler
+                      className="flex items-center justify-center bg-[#060668] text-white font-medium rounded-md py-1 px-4 text-sm"
+                    >
+                      <span className="mr-2">Create</span>
+                      <span className="text-lg font-bold">+</span>
+                    </button>
                   </div>
                 </div>
-              ))}
+              ) : (
+                // 🔹 Render actual reports
+                data.reports.map((report, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col md:flex-row items-end md:items-center justify-between p-2 sm:p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    <div className="flex items-start sm:items-center space-x-4">
+                      <div className="bg-blue-50 p-[6px] sm:p-2 rounded-lg">
+                        <FaFileAlt className="text-[#060668] text-2xl" />
+                      </div>
+                      <div>
+                        <h4 className="text-[13px] sm:text-base font-medium text-gray-800">
+                          <p>
+                            {report.report_topic.length > 80
+                              ? report.report_topic.slice(0, 80) + "..."
+                              : report.report_topic}
+                          </p>
+                        </h4>
+                        <div className="flex items-center space-x-4 text-sm text-gray-600 mt-1">
+                          <span className="bg-gray-50 text-black px-2 py-1 rounded-full text-xs">
+                            {new Date(report.created_at).toLocaleDateString()}
+                          </span>
+                          <span
+                            className={`px-2 py-1 rounded-full text-xs
+                    ${
+                      report.status === "complete"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
+                    }
+                  `}
+                          >
+                            {report.status}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex mt-4 sm:mt-0 space-x-2">
+                      {report.status !== "outline" ? (
+                        <button
+                          onClick={() => viewreport(report.report_id)}
+                          className="bg-[#060668] text-white font-medium rounded-md py-1 text-sm w-28"
+                        >
+                          View Report
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleOutline(report.report_id)}
+                          className="bg-[#060668] text-white font-medium rounded-md py-1 text-sm w-28"
+                        >
+                          View Outline
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

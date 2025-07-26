@@ -138,13 +138,13 @@ const About = () => {
               <img
                 src={oye}
                 alt="Oyewole Temi"
-                className="w-[70px] h-[70px] sm:w-24 sm:h-24 object-cover rounded-full"
+                className="w-[75px] h-[75px] sm:w-28 sm:h-28 object-cover rounded-full"
               />
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">
                   Oyewole Temiloluwa
                 </h3>
-                <p className="text-sm text-gray-600 font-normal">
+                <p className="text-sm text-gray-700 font-medium">
                   CEO / Backend Developer
                 </p>{" "}
                 <span className="flex gap-2 mt-2">
@@ -175,13 +175,13 @@ const About = () => {
               <img
                 src={dav}
                 alt="Akintola David "
-                className="w-[70px] h-[70px] sm:w-24 sm:h-24 object-cover rounded-full"
+                className="w-[75px] h-[75px] sm:w-28 sm:h-28 object-cover rounded-full"
               />
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">
                   Akintola David
                 </h3>
-                <p className="text-sm text-gray-600 font-normal">
+                <p className="text-sm text-gray-700 font-medium">
                   Frontend Developer
                 </p>{" "}
                 <span className="flex gap-2 mt-2">
@@ -220,13 +220,13 @@ const About = () => {
               <img
                 src={adg}
                 alt="Tomiwa Adeaga"
-                className="w-[70px] h-[70px] sm:w-24 sm:h-24 object-cover rounded-full"
+                className="w-[75px] h-[75px] sm:w-28 sm:h-28 object-cover rounded-full"
               />
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">
                   Tomiwa Adeaga
                 </h3>
-                <p className="text-sm text-gray-600 font-normal">AI Engineer</p>{" "}
+                <p className="text-sm text-gray-700 font-medium">AI Engineer</p>{" "}
                 <span className="flex gap-2 mt-2">
                   <div className="flex items-center gap-3 text-gray-800">
                     <a
@@ -254,13 +254,13 @@ const About = () => {
               <img
                 src={trabs}
                 alt="Igbaroola Samuel"
-                className="w-[70px] h-[70px] sm:w-24 sm:h-24 object-cover rounded-full"
+                className="w-[75px] h-[75px] sm:w-28 sm:h-28 object-cover rounded-full"
               />
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">
                   Igbaroola Samuel
                 </h3>
-                <p className="text-sm text-gray-600 font-normal">
+                <p className="text-sm text-gray-700 font-medium">
                   Frontend Developer
                 </p>{" "}
                 <span className="flex gap-2 mt-2">
@@ -290,7 +290,7 @@ const About = () => {
               <img
                 src={bon}
                 alt="Ogundinrun AyooluwaTomiwa"
-                className="w-[70px] h-[70px] sm:w-24 sm:h-24 object-cover rounded-full"
+                className="w-[75px] h-[75px] sm:w-28 sm:h-28 object-cover rounded-full"
               />
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">
@@ -299,7 +299,7 @@ const About = () => {
                 <h3 className="text-lg font-semibold text-gray-900">
                   AyooluwaTomiwa
                 </h3>
-                <p className="mt-1 text-sm text-gray-600 font-normal">
+                <p className="mt-1 text-sm text-gray-700 font-medium">
                   Finance Manager
                 </p>
                 <span className="flex gap-2 mt-2">
@@ -330,14 +330,14 @@ const About = () => {
               <img
                 src={samo}
                 alt="Bolaji Samo"
-                className="w-[70px] h-[70px] sm:w-24 sm:h-24 object-cover rounded-full"
+                className="w-[75px] h-[75px] sm:w-28 sm:h-28 object-cover rounded-full"
               />
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">
                   Bolaji Samo
                 </h3>
-                <p className="text-sm text-gray-600 font-normal">
-                  Policy And Strategy
+                <p className="text-sm text-gray-700 font-medium">
+                  Product Manager
                 </p>{" "}
                 <span className="flex gap-2 mt-2">
                   <div className="flex items-center gap-3 text-gray-800">
@@ -367,13 +367,13 @@ const About = () => {
               <img
                 src={deo}
                 alt=" Olaoye Daniel"
-                className="w-[70px] h-[70px] sm:w-24 sm:h-24 object-cover rounded-full"
+                className="w-[75px] h-[75px] sm:w-28 sm:h-28 object-cover rounded-full"
               />
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">
                   Olaoye Daniel
                 </h3>
-                <p className="text-sm text-gray-600 font-normal">
+                <p className="text-sm text-gray-700 font-medium">
                   Finance Manager
                 </p>{" "}
                 <span className="flex gap-2 mt-2">

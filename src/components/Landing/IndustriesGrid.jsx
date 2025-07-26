@@ -1,11 +1,4 @@
-import {
-  FaHeartbeat,
-  FaDollarSign,
-  FaChartLine,
-  FaGraduationCap,
-  FaShoppingCart,
-  FaIndustry,
-} from "react-icons/fa";
+ 
 import { AiFillThunderbolt } from "react-icons/ai";
 import { IoDocumentText } from "react-icons/io5";
 import { FaUpload } from "react-icons/fa";

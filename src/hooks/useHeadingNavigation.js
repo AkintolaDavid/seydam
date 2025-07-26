@@ -27,9 +27,7 @@ export const useHeadingNavigation = (editorRef, content) => {
         "h1, h2, h3, h4, h5, h6"
       );
       const extractedHeadings = [];
-
-      console.log(`Found ${headingElements.length} heading elements`);
-
+ 
       headingElements.forEach((element, index) => {
         const htmlElement = element;
         const level = parseInt(htmlElement.tagName.charAt(1));
@@ -40,11 +38,7 @@ export const useHeadingNavigation = (editorRef, content) => {
         if (!id) {
           id = `heading-${level}-${Date.now()}-${index}`;
           htmlElement.id = id;
-        }
-
-        console.log(
-          `Extracted heading: Level ${level}, Text: "${text}", ID: ${id}`
-        );
+        } 
 
         extractedHeadings.push({
           id,
@@ -56,8 +50,7 @@ export const useHeadingNavigation = (editorRef, content) => {
         });
       });
 
-      console.log(`Total headings extracted: ${extractedHeadings.length}`);
-
+      
       // Force update by creating new array
       setHeadings([...extractedHeadings]);
 
@@ -125,8 +118,7 @@ export const useHeadingNavigation = (editorRef, content) => {
         }
       });
 
-      if (shouldExtract) {
-        console.log("DOM mutation detected, extracting headings...");
+      if (shouldExtract) { 
         extractHeadings();
       }
     });
@@ -150,11 +142,7 @@ export const useHeadingNavigation = (editorRef, content) => {
   // Get content between a heading and the next heading of same or higher level
   const getHeadingContent = useCallback(
     (heading) => {
-      if (!editorRef.current) return "";
-
-      console.log(
-        `Getting content for heading: "${heading.text}" (Level ${heading.level})`
-      );
+      if (!editorRef.current) return "" 
 
       const allElements = Array.from(editorRef.current.children);
       const headingIndex = allElements.findIndex(

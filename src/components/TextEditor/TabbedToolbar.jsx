@@ -8,6 +8,7 @@ import { ExportSection } from "./toolbar-sections/ExportSection";
 import { InsertSection } from "./toolbar-sections/InsertSection";
 import { UndoRedoControls } from "./UndoRedoControls";
 import { JsonImporter } from "./JsonImporter";
+import { FaRegSave } from "react-icons/fa";
 
 export const TabbedToolbar = (props) => {
   const [activeTab, setActiveTab] = useState("home");
@@ -16,7 +17,7 @@ export const TabbedToolbar = (props) => {
     { id: "home", label: "Home", icon: Home },
     { id: "insert", label: "Insert", icon: Plus },
     { id: "layout", label: "Page Layout", icon: Layout },
-    { id: "export", label: "Export", icon: Download },
+    { id: "export", label: "Export Report", icon: Download },
   ];
 
   const renderTabContent = () => {
@@ -54,7 +55,6 @@ export const TabbedToolbar = (props) => {
             {/* <JsonImporter onImport={props.onJsonImport} /> */}
           </div>
         </div>
-
         {/* Tab buttons */}
         <div className="flex">
           {tabs.map((tab) => {
@@ -74,7 +74,10 @@ export const TabbedToolbar = (props) => {
               </button>
             );
           })}
-        </div>
+        </div>{" "}
+        <button className="flex rounded-lg items-center gap-2 px-3 ml-2 py-2 text-sm font-medium transition-colors relative bg-[#1a1a8c] text-white border-b-2 border-[#1a1a8c]">
+          <FaRegSave /> Save Report
+        </button>
       </div>
 
       {/* Tab Content */}

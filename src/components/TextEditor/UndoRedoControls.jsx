@@ -72,11 +72,19 @@ export const UndoRedoControls = ({
         <button
           onClick={() => onUndo(1)}
           disabled={!canUndo}
-          className={`p-2 border-r border-gray-300 hover:bg-blue-50 transition-colors ${
+          className={`p-2 border-r  flex flex-col items-center border-gray-300 hover:bg-blue-50 transition-colors ${
             canUndo ? "text-gray-700" : "text-gray-400 cursor-not-allowed"
           }`}
           title={`Undo${undoCount > 0 ? ` (${undoCount} available)` : ""}`}
         >
+          {" "}
+          <span
+            className={`text-[12px]  font-medium ${
+              canRedo ? "text-gray-700" : "text-gray-500 cursor-not-allowed"
+            }`}
+          >
+            UNDO
+          </span>
           <Undo size={16} />
         </button>
 
@@ -156,11 +164,18 @@ export const UndoRedoControls = ({
         <button
           onClick={() => onRedo(1)}
           disabled={!canRedo}
-          className={`p-2 hover:bg-blue-50 transition-colors ${
+          className={`p-2 flex flex-col items-center hover:bg-blue-50 transition-colors ${
             canRedo ? "text-gray-700" : "text-gray-400 cursor-not-allowed"
           }`}
           title={`Redo${redoCount > 0 ? ` (${redoCount} available)` : ""}`}
         >
+          <span
+            className={`text-[12px]  font-medium ${
+              canRedo ? "text-gray-700" : "text-gray-500 cursor-not-allowed"
+            }`}
+          >
+            REDO
+          </span>
           <Redo size={16} />
         </button>
 

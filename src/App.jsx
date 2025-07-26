@@ -73,7 +73,7 @@ function App() {
                 <Route path="/login" element={<Login setToken={setToken} />} />
                 {/* Sign Up Route */}
                 <Route path="/signup" element={<Signup />} />
-                <Route path="/signupotp" element={<VerifyOTP />} />  
+                <Route path="/signupotp" element={<VerifyOTP />} />
                 {/* Protected Routes */}
                 {/* <Route
                   path="/dashboard"
@@ -83,13 +83,13 @@ function App() {
                     </ProtectedRoute>
                   }
                 /> */}
-                 <Route
+                <Route
                   path="/text-editor"
                   element={
                     <ProtectedRoute>
-                      <DashboardLayout>
-                        <TextEditor />
-                      </DashboardLayout>
+                      {/* <DashboardLayout> */}
+                      <TextEditor />
+                      {/* </DashboardLayout> */}
                     </ProtectedRoute>
                   }
                 />
@@ -147,10 +147,9 @@ function App() {
                   path="/profile"
                   element={
                     <ProtectedRoute>
-                        <DashboardLayout>
+                      <DashboardLayout>
                         <Profile />
                       </DashboardLayout>
-                    
                     </ProtectedRoute>
                   }
                 />

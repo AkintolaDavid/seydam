@@ -1,6 +1,6 @@
-import React from 'react';
-import { ExportDropdown } from '../ExportDropdown';
-import { HtmlViewer } from '../HtmlViewer';
+import React from "react";
+import { ExportDropdown } from "../ExportDropdown";
+import { HtmlViewer } from "../HtmlViewer";
 
 export const ExportSection = ({
   editorState,
@@ -11,16 +11,15 @@ export const ExportSection = ({
   return (
     <div className="flex flex-wrap items-center gap-6">
       {/* View HTML */}
-      <div className="flex items-center gap-2">
+      {/* <div className="flex items-center gap-2">
         <div className="text-sm font-medium text-gray-700 mr-2">View</div>
         <HtmlViewer content={editorState.content} />
-      </div>
+      </div> */}
 
-      <div className="w-px h-8 bg-gray-300" />
+      {/* <div className="w-px h-8 bg-gray-300" /> */}
 
       {/* Export Options */}
       <div className="flex items-center gap-2">
-        <div className="text-sm font-medium text-gray-700 mr-2">Export Document</div>
         <ExportDropdown
           onExportPDF={onExportPDF}
           onExportDocx={onExportDocx}

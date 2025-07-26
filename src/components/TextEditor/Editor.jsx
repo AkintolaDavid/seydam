@@ -57,10 +57,10 @@ export const Editor = ({
   const currentDimensions = getCurrentPaperDimensions();
   const pageWidth = cmToPx(currentDimensions.width);
   const pageHeight = cmToPx(currentDimensions.height);
-  const topMargin = cmToPx(editorState.margins.top);
+  const topMargin = cmToPx(editorState.margins.top * 0.7);
   const bottomMargin = cmToPx(editorState.margins.bottom);
   const leftMargin = cmToPx(editorState.margins.left);
-  const rightMargin = cmToPx(editorState.margins.right);
+  const rightMargin = cmToPx(editorState.margins.right * 1.4);
 
   // FIXED: Add buffer space before page separators (20px buffer)
   const pageBuffer = 20;
@@ -427,18 +427,20 @@ export const Editor = ({
     };
   }, []);
 
-  // FIXED: Proper margin styles with reduced right spacing
+  // FIXED: Equal margins on both sides
   const marginStyles = {
     paddingTop: `${topMargin}px`,
-    paddingBottom: `${bottomMargin + pageBuffer}px`, // Add buffer at bottom
+    paddingBottom: `${bottomMargin + pageBuffer}px`,
     paddingLeft: `${leftMargin}px`,
-    paddingRight: `${rightMargin * 0.0001}px`, // REDUCED right margin by 40%
+    paddingRight: `${rightMargin}px`, // FIXED: Use actual rightMargin, not reduced
     minHeight: `${availablePageHeight}px`,
     boxSizing: "border-box",
-    // Force content to respect boundaries and prevent overflow
-    overflow: "visible", // Changed from hidden to visible
+    overflow: "visible",
     wordWrap: "break-word",
     overflowWrap: "break-word",
+    // FIXED: Ensure content is properly centered
+    margin: "0 auto",
+    maxWidth: `${availablePageWidth}px`,
   };
 
   // FIXED: Generate page separators that don't hide content
@@ -451,7 +453,7 @@ export const Editor = ({
           key={`separator-${i}`}
           className="absolute left-0 right-0 pointer-events-none"
           style={{
-            top: `${i * pageHeight + (i - 1) * 60}px`, // Fixed positioning
+            top: `${i * pageHeight + (i - 1) * 20}px`, // Fixed positioning
             height: "20px",
             zIndex: 5, // LOWER z-index so content appears above
             background: "transparent", // Transparent background
@@ -569,9 +571,8 @@ export const Editor = ({
               fontSize: "14px",
               fontFamily: '"Times New Roman", Times, serif',
               color: "#000000",
-              // FIXED: Proper width constraint
-              width: `${availablePageWidth}px`,
               textAlign: "justify",
+              // REMOVED: width constraint that was causing issues
             }}
             className="prose max-w-none editor-content"
             data-placeholder="Start typing your document... Use headings (H1-H6) to create sections that can be edited with AI."

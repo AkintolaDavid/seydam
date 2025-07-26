@@ -21,9 +21,14 @@ import {
   FaSave,
   FaEye,
 } from "react-icons/fa";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 import img1 from "../assets/features/dashboard.png";
 import img2 from "../assets/features/form.png";
 import img3 from "../assets/features/reportpage.jpg";
+
 const LandingFeatures = () => {
   const features = [
     {
@@ -109,132 +114,143 @@ const LandingFeatures = () => {
     },
   ];
 
-  // Split features into rows for scrolling animation
-  const renderFeatureRow = (featuresRow, index, direction = "left") => (
-    <Box
-      key={index}
-      display="flex"
-      gap={8}
-      animation={`scroll${
-        direction === "left" ? "Left" : "Right"
-      } 40s linear infinite`}
-      whiteSpace="nowrap"
-      overflow="hidden"
-      py={4}
-    >
-      {[...featuresRow, ...featuresRow].map((feature, i) => (
-        <Box
-          key={i}
-          minW={{ base: "350px", md: "700px", lg: "900px" }}
-          maxW={{ base: "350px", md: "700px", lg: "900px" }}
-          bg="white"
-          borderRadius="2xl"
-          shadow="sm"
-          overflow="hidden"
-          _hover={{ transform: "translateY(-4px)" }}
-          transition="all 0.3s ease"
-        >
-          <Box flex="1" p={{ base: 3, md: 6 }}>
-            <VStack align="start" spacing={{ base: 4, md: 6 }} h="full">
-              <img
-                src={feature?.image}
-                alt="homeimg"
-                className="w-[400px] sm:w-[500px] md:w-[600px] lg:w-[800px] aspect-[3/2] object-cover rounded-lg"
-              />
-
-              <Box>
-                {" "}
-                <Heading
-                  size={{ base: "19px", md: "lg", lg: "xl" }}
-                  color="gray.900"
-                  mb={4}
-                  lineHeight="shorter"
-                  fontWeight="bold"
-                >
-                  {feature?.title}
-                </Heading>
-                {/* <Text
-                  color="gray.800"
-                  fontSize={{ base: "md", md: "lg" }}
-                  lineHeight="relaxed"
-                  mb={6}
-                >
-                  {feature?.subtitle}
-                </Text> */}
-              </Box>
-              <VStack align="start" spacing={4} flex="1" w="full">
-                {feature?.benefits.map((benefit, idx) => (
-                  <Flex key={idx} align="center" gap={3} w="full">
-                    <div
-                      className="inline-flex items-center justify-center min-w-10 sm:min-w-12 h-10 sm:h-12 mb-0 rounded-full"
-                      style={{ backgroundColor: "#0D0D82" }}
-                    >
-                      <Icon
-                        as={benefit.icon}
-                        color="white"
-                        boxSize={{ base: 4, md: 5 }}
-                        flexShrink={0}
-                      />
-                    </div>{" "}
-                    <Text
-                      fontSize={{ base: "sm", md: "md" }}
-                      color="gray.800"
-                      lineHeight="relaxed"
-                      fontWeight="medium"
-                    >
-                      {benefit.text}
-                    </Text>
-                  </Flex>
-                ))}
-              </VStack>
-            </VStack>
-          </Box>
-        </Box>
-      ))}
-    </Box>
-  );
-
   return (
-    <Box
-      py={{ base: 12, lg: 20 }}
-      // bg="rgba(26, 26, 140, 0.2)"
-      overflow="hidden"
-    >
+    <Box py={{ base: 12, lg: 20 }} overflow="hidden">
       <Container maxW="container.xl" mb={8}>
         <VStack spacing={6} textAlign="center">
           <div className="text-center w-full">
-            <h2 className="text-[34px] sm:text-[42px] font-bold text-[#11117a] lg:mt-3 ">
+            <h2 className="text-[34px] sm:text-[42px] font-bold text-[#11117a] lg:mt-3">
               Our Powerful Features
             </h2>
           </div>
-          {/* <Text
-            fontSize={{ base: "md", md: "lg", lg: "xl" }}
-            color="gray.600"
-            maxW="3xl"
-            lineHeight="relaxed"
-          >
-            Discover comprehensive solutions designed to streamline your
-            operations, enhance security, and drive business growth with
-            cutting-edge technology.
-          </Text> */}
         </VStack>
       </Container>
 
-      {/* Scrolling Feature Rows */}
-      <VStack spacing={12} w="full">
-        {renderFeatureRow(features, 1, "left")}
-      </VStack>
+      {/* Swiper Component */}
+      <Box w="full" px={{ base: 4, md: 8 }}>
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          spaceBetween={30}
+          slidesPerView={1}
+          pagination={{
+            clickable: true,
+            bulletClass: "swiper-pagination-bullet custom-bullet",
+            bulletActiveClass:
+              "swiper-pagination-bullet-active custom-bullet-active",
+          }}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+          }}
+          loop={true}
+          breakpoints={{
+            640: {
+              slidesPerView: 1,
+              spaceBetween: 20,
+            },
+            768: {
+              slidesPerView: 1,
+              spaceBetween: 30,
+            },
+            1024: {
+              slidesPerView: 1,
+              spaceBetween: 40,
+            },
+          }}
+          className="features-swiper"
+        >
+          {features.map((feature) => (
+            <SwiperSlide key={feature.id}>
+              <Box
+                maxW={{ base: "350px", md: "700px", lg: "900px" }}
+                bg="white"
+                borderRadius="2xl"
+                shadow="sm"
+                overflow="hidden"
+                mx="auto"
+                _hover={{ transform: "translateY(-4px)" }}
+                transition="all 0.3s ease"
+              >
+                <Box flex="1" p={{ base: 3, md: 6 }}>
+                  <VStack align="start" spacing={{ base: 4, md: 6 }} h="full">
+                    <img
+                      src={feature?.image || "/placeholder.svg"}
+                      alt={feature?.title}
+                      className="w-[400px] sm:w-[500px] md:w-[600px] lg:w-[800px] aspect-[3/2] object-cover rounded-lg"
+                    />
+                    <Box>
+                      <Heading
+                        size={{ base: "19px", md: "lg", lg: "xl" }}
+                        color="gray.900"
+                        mb={4}
+                        lineHeight="shorter"
+                        fontWeight="bold"
+                      >
+                        {feature?.title}
+                      </Heading>
+                    </Box>
+                    <VStack align="start" spacing={4} flex="1" w="full">
+                      {feature?.benefits.map((benefit, idx) => (
+                        <Flex key={idx} align="center" gap={3} w="full">
+                          <div
+                            className="inline-flex items-center justify-center min-w-10 sm:min-w-12 h-10 sm:h-12 mb-0 rounded-full"
+                            style={{ backgroundColor: "#0D0D82" }}
+                          >
+                            <Icon
+                              as={benefit.icon}
+                              color="white"
+                              boxSize={{ base: 4, md: 5 }}
+                              flexShrink={0}
+                            />
+                          </div>
+                          <Text
+                            fontSize={{ base: "sm", md: "md" }}
+                            color="gray.800"
+                            lineHeight="relaxed"
+                            fontWeight="medium"
+                          >
+                            {benefit.text}
+                          </Text>
+                        </Flex>
+                      ))}
+                    </VStack>
+                  </VStack>
+                </Box>
+              </Box>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </Box>
 
-      {/* Scrolling animation keyframes */}
+      {/* Custom Swiper Styles */}
       <style>
         {`
-        @keyframes scrollLeft {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+        .features-swiper {
+          padding-bottom: 50px !important;
         }
-        @keyframes scrollRight {
-          0% { transform: translateX(-50%); }
-          100% { transform: translateX(0); }
+        
+        .features-swiper .swiper-pagination {
+          bottom: 10px !important;
+        }
+        
+        .custom-bullet {
+          width: 12px !important;
+          height: 12px !important;
+          background: #cbd5e0 !important;
+          opacity: 1 !important;
+          margin: 0 6px !important;
+          transition: all 0.3s ease !important;
+        }
+        
+        .custom-bullet-active {
+          background: #11117a !important;
+          transform: scale(1.2) !important;
+        }
+        
+        .features-swiper .swiper-slide {
+          display: flex !important;
+          justify-content: center !important;
+          align-items: center !important;
         }
         `}
       </style>

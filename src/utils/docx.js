@@ -350,6 +350,7 @@ const createDocxTable = (tableData) => {
 };
 
 export const exportToDocx = async (element, margins) => {
+  console.log(element) 
   try {
     // Parse HTML content to structured elements
     const elements = parseHtmlToElements(element);

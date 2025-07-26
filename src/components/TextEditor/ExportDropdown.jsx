@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Download, FileText, File, ChevronDown } from "lucide-react";
+import pdfIcon from "../../assets/download/pdf.png";
+import docxIcon from "../../assets/download/docs.png";
 
 export const ExportDropdown = ({ onExportPDF, onExportDocx, isExporting }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const dropdownRef = useRef(null);
 
   // Close dropdown when clicking outside
@@ -34,54 +35,49 @@ export const ExportDropdown = ({ onExportPDF, onExportDocx, isExporting }) => {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        disabled={isExporting}
-        className="flex items-center gap-2 px-3 py-2 bg-[#1a1a8c] text-white rounded hover:bg-[#141466] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        title="Export Document"
-      >
-        <Download size={16} />
-        <span>Export</span>
-        <ChevronDown size={14} />
-      </button>
-
-      {isOpen && (
-        <div className="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded shadow-lg z-50 min-w-[180px]">
-          <div className="p-2 border-b border-gray-200">
-            <div className="text-sm font-medium text-gray-700">
-              Export Options
+      <div className="mt-1 bg-white border border-gray-200 rounded-lg z-50 flex overflow-hidden">
+        <button
+          onClick={handleExportPDF}
+          disabled={isExporting}
+          className="flex-1 flex items-center gap-3 px-4 py-3 text-left hover:bg-red-50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group border-r border-gray-100"
+        >
+          <div className="w-8 h-8 rounded-lg bg-red-100  group-hover:bg-red-200 transition-colors">
+            <img
+              src={pdfIcon}
+              alt="PDF"
+              className="w-full h-full object-cover rounded"
+            />
+          </div>
+          <div>
+            <div className="font-semibold text-gray-900 text-sm">
+              Export as PDF
+            </div>
+            <div className="text-xs text-gray-500">
+              Portable Document Format
             </div>
           </div>
+        </button>
 
-          <button
-            onClick={handleExportPDF}
-            disabled={isExporting}
-            className="w-full flex items-center gap-3 px-3 py-2 text-left hover:bg-blue-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <FileText size={16} className="text-red-600" />
-            <div>
-              <div className="font-medium text-gray-900">Export as PDF</div>
-              <div className="text-xs text-gray-500">
-                Portable Document Format
-              </div>
+        <button
+          onClick={handleExportDocx}
+          disabled={isExporting}
+          className="flex-1 flex items-center gap-3 px-4 py-3 text-left hover:bg-blue-50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group"
+        >
+          <div className="w-8 h-8 rounded-lg bg-blue-100  group-hover:bg-blue-200 transition-colors">
+            <img
+              src={docxIcon}
+              alt="DOCX"
+              className="w-full h-full object-cover rounded"
+            />
+          </div>
+          <div>
+            <div className="font-semibold text-gray-900 text-sm">
+              Export as DOCX
             </div>
-          </button>
-
-          <button
-            onClick={handleExportDocx}
-            disabled={isExporting}
-            className="w-full flex items-center gap-3 px-3 py-2 text-left hover:bg-blue-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <File size={16} className="text-blue-600" />
-            <div>
-              <div className="font-medium text-gray-900">Export as DOCX</div>
-              <div className="text-xs text-gray-500">
-                Microsoft Word Document
-              </div>
-            </div>
-          </button>
-        </div>
-      )}
+            <div className="text-xs text-gray-500">Microsoft Word Document</div>
+          </div>
+        </button>
+      </div>
     </div>
   );
 };

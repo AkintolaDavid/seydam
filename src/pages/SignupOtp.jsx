@@ -12,13 +12,18 @@ export default function VerifyOTP() {
   const navigate = useNavigate();
   const toast = useToast();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+
   const handleVerify = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
       const email = localStorage.getItem("signupemail");
+      const signupusername = localStorage.getItem("signupusername");
 
+      const password1 = localStorage.getItem("password1");
+      const password2 = localStorage.getItem("password2");
+      console.log(signupusername, password1, password2);
       if (!email || otp.length !== 6) {
         throw new Error("Invalid email or OTP.");
       }
@@ -26,6 +31,9 @@ export default function VerifyOTP() {
       const response = await axios.post(`${BASE_URL}verify-otp/`, {
         email,
         otp: parseInt(otp, 10),
+        username: signupusername,
+        password1,
+        password2,
       });
       localStorage.setItem("seydamtoken", response.data.token);
       toast({
@@ -42,6 +50,10 @@ export default function VerifyOTP() {
 
       localStorage.removeItem("signupemail");
 
+      localStorage.removeItem("password1");
+
+      localStorage.removeItem("password2");
+      localStorage.removeItem("signupusername");
       setTimeout(() => {
         navigate("/dashboard");
       }, 2000);

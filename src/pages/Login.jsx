@@ -27,7 +27,7 @@ export default function Login({ setToken }) {
       setMessage(response.data.message);
 
       localStorage.setItem("seydamtoken", response.data.token);
-      localStorage.setItem("username", response.data.username);
+      localStorage.setItem("username", response.data.username); 
       toast({
         title: "Login Successful",
         status: "success",

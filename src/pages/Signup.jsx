@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
 import { Eye, EyeOff, UserPlus } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import logo from "../assets/logo/logowhitebg.png";
 import { FaAngleLeft } from "react-icons/fa";
@@ -15,8 +15,7 @@ export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const toast = useToast(); // ✅ init toast
-
+  const toast = useToast();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -26,8 +25,8 @@ export default function Signup() {
         {
           username,
           email,
-          password1,
-          password2,
+          // password1,
+          // password2,
         },
         {
           headers: {
@@ -37,7 +36,7 @@ export default function Signup() {
       );
       if (response.status === 200) {
         toast({
-          title: "OTP successfully sent to your mail",
+          title: "Check your mail for OTP",
           status: "success",
           duration: 2000, // Toast visible for 2 seconds
           isClosable: true,
@@ -45,11 +44,14 @@ export default function Signup() {
         });
 
         localStorage.setItem("signupemail", email);
-
+        localStorage.setItem("signupusername", username);
+        
+        localStorage.setItem("password1", password1);
+        localStorage.setItem("password2", password2);
         // Wait 2 seconds before navigating
         setTimeout(() => {
           navigate("/signupotp");
-        }, 2000);
+        }, 1500);
       }
     } catch (error) {
       const errorMsg = error.response?.data?.error || "Error signing up";
